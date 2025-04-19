@@ -9,9 +9,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
 document.querySelectorAll('.card-container').forEach(container => {
   const arrow = container.querySelector('.toggle-arrow');
-  const card = container.querySelector('.inner-card');
+  const wrapper = container.querySelector('.inner-card');
 
   arrow.addEventListener('click', () => {
-    card.classList.toggle('flipped');
+    wrapper.classList.toggle('flipped');
   });
 });

@@ -123,7 +123,8 @@ nav a {
   flex-wrap: wrap;
 }
 
-.card-container {
+.card-container,
+.card-wrapper {
   position: relative;
   width: 250px;
   height: 300px;
@@ -134,30 +135,31 @@ nav a {
 }
 
 .inner-card {
+  transform-style: preserve-3d;
   position: relative;
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
   transition: transform 1s;
-  transform-origin: right center;
   will-change: transform;
+  transform-origin: right center;
 }
 
 .inner-card.flipped {
-  transform: translateX(-80%) rotateY(-180deg);
-  margin-left: -20px;
+  transform: translateX(-100%) rotateY(-180deg);
+  margin-left: 40px;
 }
 
 .card-front,
 .card-back {
-  background-color: #2d3e5f;
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background-color: #2d3e5f;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .card-front {
