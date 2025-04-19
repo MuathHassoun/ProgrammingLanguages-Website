@@ -9,7 +9,7 @@ html {
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #0f172a; /* Dark Blue */
+  background-color: #0f172a;
   color: #f1f5f9;
 }
 
@@ -154,8 +154,8 @@ nav a {
 }
 
 #learn-section {
-  padding: 2rem;
-  background-color: #0f172a;
+  padding: 4rem 8rem;
+  background-color: #061042;
   color: #f1f5f9;
 }
 
@@ -181,6 +181,13 @@ nav a {
 .external-link {
   color: #7dd3fc;
   text-decoration: underline;
+  transition: transform 0.3s ease, letter-spacing 0.3s ease;
+}
+
+.external-link:hover {
+  color: #38bdf8;
+  transform: scale(1.2);
+  letter-spacing: 1px;
 }
 
 .final-tip {
