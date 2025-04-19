@@ -2,9 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us Page</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/contact-style.css" />
 </head>
 <body>
+  <!-- Header -->
+  <header>
+    <a href="../index.html#learn-section"><h1>Learn Programming Languages</h1></a>
+    <nav>
+      <div class="nav-center">
+        <a href="../index.html">Home</a>
+        <a href="#">Languages</a>
+        <a href="../html_pages/Compare.html#compare-section">Compare</a>
+        <a href="../html_pages/AboutUs.html#about-us-section">About Us</a>
+        <a href="../html_pages/ContactUs.html#contact-us-section">Contact Us</a>
+      </div>
+      <div class="nav-auth">
+        <a href="../html_pages/Login.html#login-section">Login</a>
+        <a href="../html_pages/Register.html#register-section">Register</a>
+      </div>
+    </nav>
+  </header>
 
+  <!-- Contact Us Section -->
+  <main class="contact-us" id="contact-us-section">
+    <div class="contact-us-image">
+    </div>
+    <div class="contact-us-content">
+      <h2>Contact Us</h2>
+      <p>
+        If you have any questions, please feel free to contact us.
+      </p>
+      <form action="">
+        <section class="contact-form">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" placeholder="Enter message subject" required/>
+        </section>
+        <section class="contact-form">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your name" required/>
+        </section>
+        <section class="contact-form">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required/>
+        </section>
+        <section class="contact-form">
+          <label for="message">Message</label>
+          <textarea name="message" id="message" cols="30" rows="10" placeholder="Enter your message" required></textarea>
+        </section>
+        <section class="contact-form">
+          <button type="submit">Send</button>
+        </section>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Learn Programming Languages - All Rights Reserved</p>
+  </footer>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Learn Programming Languages</title>
+  <title>CodeWorld Website</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -12,21 +12,22 @@
     <a href="#learn-section"><h1>Learn Programming Languages</h1></a>
     <nav>
       <div class="nav-center">
-        <a href="#">Home</a>
+        <a href="index.html">Home</a>
         <a href="#">Languages</a>
-        <a href="#">Compare</a>
-        <a href="#">About Us</a>
-        <a href="#">Contact</a>
+        <a href="html_pages/Compare.html#compare-section">Compare</a>
+        <a href="html_pages/AboutUs.html#about-us-section">About Us</a>
+        <a href="html_pages/ContactUs.html#contact-us-section">Contact Us</a>
       </div>
       <div class="nav-auth">
-        <a href="#">Login</a>
-        <a href="#">Sign Up</a>
+        <a href="html_pages/Login.html#login-section">Login</a>
+        <a href="html_pages/Register.html#register-section">Register</a>
       </div>
     </nav>
   </header>
 
   <!-- Hero Section -->
   <section class="hero">
+    <h1>Welcome to CodeWorld!</h1>
     <h2>Start Your Coding Journey Today</h2>
     <p>Explore different programming languages and learn how to build websites and apps from scratch.</p>
     <a href="#">Get Started</a>
@@ -37,68 +38,319 @@
     <h2>Popular Programming Languages</h2>
     <div class="language-cards">
       <!-- Python Card -->
-      <div class="card">
-        <!--https://via.placeholder.com/150-->
-        <img src="img/python.jpg" alt="Python">
-        <h3>Python</h3>
-        <p>Great for web development, data analysis, and artificial intelligence.</p>
-        <a href="#">Learn More</a>
+      <div class="card-container">
+        <div class="inner-card">
+          <div class="card-front">
+            <!--https://via.placeholder.com/150-->
+            <img src="img/languages/python.jpg" alt="Python">
+            <h3>Python</h3>
+            <p>Great for web development, data analysis, and artificial intelligence.</p>
+            <a href="./html_pages/Compare.html#python">Learn More</a>
+          </div>
+          <div class="card-back">
+            <h3>Python</h3>
+            <pre>
+              Python is a high-level, readable, and beginner-friendly language.
+
+              Widely used in data science, AI, web development, and automation.
+
+              Has extensive libraries (e.g., NumPy, Pandas, Django).
+
+              Supports multiple paradigms: procedural, OOP, and functional.
+
+              Ideal for scripting and quick prototyping.
+
+              Used by major companies like Google and Netflix.
+
+              Interpreted and dynamically typed.
+
+              Great for tasks involving math, data, and machine learning.
+
+              Large, active community with excellent documentation.
+            </pre>
+          </div>
+          <div class="toggle-arrow">&#9654;</div>
+        </div>
       </div>
+
       <!-- Java Card -->
-      <div class="card">
-        <img src="img/java.jpg" alt="Java">
-        <h3>Java</h3>
-        <p>The language of the web for creating interactive websites.</p>
-        <a href="#">Learn More</a>
+      <div class="card-container">
+        <div class="inner-card">
+          <div class="card-front">
+            <img src="img/languages/java.jpg" alt="Java">
+            <h3>Java</h3>
+            <p>The language of the web for creating interactive websites.</p>
+            <a href="./html_pages/Compare.html#java">Learn More</a>
+          </div>
+          <div class="card-back">
+            <h3>Java</h3>
+            <pre>
+              Java is a powerful, object-oriented language used in web, desktop, and Android development.
+
+              It runs on the Java Virtual Machine (JVM), making it platform-independent.
+
+              Popular for building large-scale enterprise applications.
+
+              Syntax is strict and requires defining variable types.
+
+              Supports multithreading and robust memory management.
+
+              Used in banking, telecom, and enterprise software.
+
+              Has strong community and library support (e.g., Spring).
+
+              Performance is high compared to many interpreted languages.
+
+              Ideal for complex, scalable applications.
+            </pre>
+          </div>
+          <div class="toggle-arrow">&#9654;</div>
+        </div>
       </div>
+
       <!-- Kotlin Card -->
-      <div class="card">
-        <img src="img/kotlin.jpg" alt="Kotlin">
-        <h3>Kotlin</h3>
-        <p>The modern language for Android development.</p>
-        <a href="#">Learn More</a>
+      <div class="card-container">
+        <div class="inner-card">
+          <div class="card-front">
+            <img src="img/languages/kotlin.jpg" alt="Kotlin">
+            <h3>Kotlin</h3>
+            <p>The modern language for Android development.</p>
+            <a href="./html_pages/Compare.html#kotlin">Learn More</a>
+          </div>
+          <div class="card-back">
+            <h3>Kotlin</h3>
+            <pre>
+              Kotlin is a concise, statically-typed language for modern development.
+
+              Fully interoperable with Java and runs on the JVM.
+
+              Official language for Android app development by Google.
+
+              Null safety and reduced boilerplate make it safer than Java.
+
+              Supports both OOP and functional styles.
+
+              Has smart type inference and concise syntax.
+
+              Used with Android Studio and frameworks like Ktor.
+
+              Also used in backend, desktop, and multiplatform projects.
+
+              Fast-growing in popularity, especially in mobile development.
+            </pre>
+          </div>
+          <div class="toggle-arrow">&#9654;</div>
+        </div>
       </div>
+
       <!-- JavaScript Card -->
-      <div class="card">
-        <img src="img/javascript.png" alt="JavaScript">
-        <h3>JavaScript</h3>
-        <p>The language of the web for creating interactive websites.</p>
-        <a href="#">Learn More</a>
+      <div class="card-container">
+        <div class="inner-card">
+          <div class="card-front">
+            <img src="img/languages/javascript.png" alt="JavaScript">
+            <h3>JavaScript</h3>
+            <p>The language of the web for creating interactive websites.</p>
+            <a href="./html_pages/Compare.html#javascript">Learn More</a>
+          </div>
+          <div class="card-back">
+            <h3>JavaScript</h3>
+            <pre>
+              JavaScript is a dynamic scripting language mainly used for web development.
+
+              Runs in the browser to add interactivity and dynamic behavior to web pages.
+
+              Also works on servers using Node.js.
+
+              Supports functional and object-oriented programming.
+
+              Used in popular frameworks like React, Angular, and Vue.
+
+              Essential for front-end development and single-page apps.
+
+              Enables asynchronous programming with promises and async/await.
+
+              Lightweight and flexible, but can be error-prone.
+
+              Continuously updated with modern features (ES6+).
+            </pre>
+          </div>
+          <div class="toggle-arrow">&#9654;</div>
+        </div>
       </div>
+
       <!-- PHP Card -->
-      <div class="card">
-        <img src="img/php.jpg" alt="PHP">
-        <h3>PHP</h3>
-        <p>A popular scripting language for web development and server-side applications.</p>
-        <a href="#">Learn More</a>
+      <div class="card-container">
+        <div class="inner-card">
+          <div class="card-front">
+            <img src="img/languages/php.jpg" alt="PHP">
+            <h3>PHP</h3>
+            <p>A popular scripting language for web development and server-side applications.</p>
+            <a href="./html_pages/Compare.html#php">Learn More</a>
+          </div>
+          <div class="card-back">
+            <h3>PHP</h3>
+            <pre>
+              PHP is a server-side scripting language designed for web development.
+
+              Processes code on the server before sending HTML to the browser.
+
+              Widely used in WordPress, Laravel, and other CMS platforms.
+
+              Works well with MySQL and other databases.
+
+              Simple syntax, good for beginners in web back-end.
+
+              Supports OOP and procedural coding styles.
+
+              Fast to deploy and easy to integrate with HTML.
+
+              Used in dynamic websites and web apps.
+
+              Still widely used despite newer alternatives.
+            </pre>
+          </div>
+          <div class="toggle-arrow">&#9654;</div>
+        </div>
       </div>
+
       <!-- HTML Card -->
-      <div class="card">
-        <img src="img/html.jpg" alt="HTML">
-        <h3>HTML</h3>
-        <p>The foundation of web development.</p>
-        <a href="#">Learn More</a>
+      <div class="card-container">
+        <div class="inner-card">
+          <div class="card-front">
+            <img src="img/languages/html.jpg" alt="HTML">
+            <h3>HTML</h3>
+            <p>The foundation of web development.</p>
+            <a href="./html_pages/Compare.html#html">Learn More</a>
+          </div>
+          <div class="card-back">
+            <h3>HTML</h3>
+            <pre>
+              HTML (HyperText Markup Language) structures content on the web.
+
+              Defines headings, paragraphs, images, links, and more.
+
+              Forms the foundation of all web pages.
+
+              Works hand-in-hand with CSS and JavaScript.
+
+              Not a programming language, but a markup language.
+
+              Uses tags to build page elements and layout.
+
+              Supports embedding multimedia like audio and video.
+
+              Essential for creating accessible, semantic websites.
+
+              Simple and easy to learn for beginners.
+            </pre>
+          </div>
+          <div class="toggle-arrow">&#9654;</div>
+        </div>
       </div>
+
       <!-- CSS Card -->
-      <div class="card">
-        <img src="img/css.jpg" alt="CSS">
-        <h3>CSS</h3>
-        <p>Style the web with beautiful layouts and designs.</p>
-        <a href="#">Learn More</a>
+      <div class="card-container">
+        <div class="inner-card">
+          <div class="card-front">
+            <img src="img/languages/css.jpg" alt="CSS">
+            <h3>CSS</h3>
+            <p>Style the web with beautiful layouts and designs.</p>
+            <a href="./html_pages/Compare.html#css">Learn More</a>
+          </div>
+          <div class="card-back">
+            <h3>CSS</h3>
+            <pre>
+              CSS (Cascading Style Sheets) controls the appearance of web pages.
+
+              Defines layout, colors, fonts, and spacing of HTML elements.
+
+              Used with HTML to design visually appealing sites.
+
+              Supports animations, transitions, and effects.
+
+              Allows responsive design for different screen sizes.
+
+              Organizes styling with classes, IDs, and selectors.
+
+              Supports Flexbox and Grid for layout control.
+
+              Not a programming language but essential for front-end.
+
+              Works well with preprocessors like SASS and LESS.
+            </pre>
+          </div>
+          <div class="toggle-arrow">&#9654;</div>
+        </div>
       </div>
+
       <!-- C++ Card -->
-      <div class="card">
-        <img src="img/cpp.jpg" alt="C++">
-        <h3>C++</h3>
-        <p>Used for high-performance applications and game development.</p>
-        <a href="#">Learn More</a>
+      <div class="card-container">
+        <div class="inner-card">
+          <div class="card-front">
+            <img src="img/languages/cpp.jpg" alt="C++">
+            <h3>C++</h3>
+            <p>Used for high-performance applications and game development.</p>
+            <a href="./html_pages/Compare.html#cpp">Learn More</a>
+          </div>
+          <div class="card-back">
+            <h3>C++</h3>
+            <pre>
+              C++ is a high-performance, compiled language used in systems programming.
+
+              Supports both procedural and object-oriented programming.
+
+              Offers low-level memory control through pointers.
+
+              Common in game engines, operating systems, and simulations.
+
+              Faster than many high-level languages.
+
+              Has a steep learning curve but powerful capabilities.
+
+              Used in performance-critical applications.
+
+              Includes features like templates and exception handling.
+
+              Derived from C with added OOP features.
+            </pre>
+          </div>
+          <div class="toggle-arrow">&#9654;</div>
+        </div>
       </div>
+
       <!-- C# Card -->
-      <div class="card">
-        <img src="img/csharpp.jpg" alt="C#">
-        <h3>C#</h3>
-        <p>Used for high-performance applications and game development.</p>
-        <a href="#">Learn More</a>
+      <div class="card-container">
+        <div class="inner-card">
+          <div class="card-front">
+            <img src="img/languages/csharpp.jpg" alt="C#">
+            <h3>C#</h3>
+            <p>Used for high-performance applications and game development.</p>
+            <a href="./html_pages/Compare.html#csharp">Learn More</a>
+          </div>
+          <div class="card-back">
+            <h3>C#</h3>
+            <pre>
+              C# (C-Sharp) is a modern, object-oriented language by Microsoft.
+
+              Built for the .NET framework, used in Windows apps and backend services.
+
+              Popular in game development with Unity engine.
+
+              Has strong typing, garbage collection, and modern syntax.
+
+              Supports LINQ, async/await, and Windows Forms.
+
+              Often used in enterprise and desktop apps.
+
+              Easy to learn for those familiar with Java or C++.
+
+              Powerful development tools via Visual Studio.
+
+              Well-suited for both web and desktop development.
+            </pre>
+          </div>
+          <div class="toggle-arrow">&#9654;</div>
+        </div>
       </div>
     </div>
   </section>
@@ -167,5 +419,6 @@
   <footer>
     <p>© 2025 Learn Programming Languages - All Rights Reserved</p>
   </footer>
+  <script src="js/actions/index-js.js"></script>
 </body>
 </html>

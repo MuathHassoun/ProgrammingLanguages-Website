@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/contact-style.css" />
+  <link rel="stylesheet" href="../css/login-style.css" />
+  <title>Login Page</title>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <a href="../index.html#learn-section"><h1>Learn Programming Languages</h1></a>
+    <nav>
+      <div class="nav-center">
+        <a href="../index.html">Home</a>
+        <a href="#">Languages</a>
+        <a href="../html_pages/Compare.html#compare-section">Compare</a>
+        <a href="../html_pages/AboutUs.html#about-us-section">About Us</a>
+        <a href="../html_pages/ContactUs.html#contact-us-section">Contact Us</a>
+      </div>
+      <div class="nav-auth">
+        <a href="../html_pages/Login.html#login-section">Login</a>
+        <a href="../html_pages/Register.html#register-section">Register</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Login Section -->
+  <main class="login-page" id="login-section">
+    <section class="login-container">
+      <div class="login-img">
+      </div>
+
+      <div class="login-content">
+        <h1>Welcome to CodeWorld!</h1>
+        <p class="login-message">
+          Explore different programming languages and learn how to build websites and apps from scratch.
+          Join us today and take your first step into the world of development!
+        </p>
+        <br>
+        <form action="../index.html" method="POST">
+          <section class="login-form">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required/>
+          </section>
+          <section class="login-form">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required/>
+          </section>
+          <button type="submit">Login</button>
+        </form>
+
+        <section class="login-links">
+          <a href="/forgot-password">Forgot your password?</a>
+          <p>
+            Don't have an account? <a href="Register.html#register-section">Create one now</a> and start learning today!
+          </p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Learn Programming Languages - All Rights Reserved</p>
+  </footer>
+</body>
+</html>

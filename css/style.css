@@ -62,14 +62,22 @@ nav a {
   color: #38bdf8;
   text-decoration: none;
   font-weight: bold;
+  transition: transform 0.3s ease, letter-spacing 0.3s ease;
 }
 
 .hero {
   text-align: center;
   padding: 100px 20px;
-  background-image: url('../img/hero-background3.jpg');
+  background-image: url('../img/background/hero-background3.jpg');
   background-size: cover;
   color: #f1f5f9;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-style: italic;
 }
 
 .hero h2 {
@@ -111,36 +119,95 @@ nav a {
 .language-cards {
   display: flex;
   justify-content: space-around;
-  gap: 30px;
+  gap: 50px;
   flex-wrap: wrap;
 }
 
-.card {
-  background-color: #2d3e5f;
-  padding: 30px;
+.card-container {
+  position: relative;
   width: 250px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  height: 300px;
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.card img {
+.inner-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  transform-origin: right center;
+  will-change: transform;
+}
+
+.inner-card.flipped {
+  transform: translateX(-80%) rotateY(-180deg);
+  margin-left: -20px;
+}
+
+.card-front,
+.card-back {
+  background-color: #2d3e5f;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  backface-visibility: hidden;
+}
+
+.card-front {
+  text-align: center;
+  z-index: 2;
+}
+
+.card-back {
+  background-color: #1c2a45;
+  transform: rotateY(180deg);
+  text-align: left;
+  overflow-y: auto;
+}
+
+.toggle-arrow {
+  position: absolute;
+  top: 67%;
+  right: -25px;
+  transform: translateY(-100%);
+  cursor: pointer;
+  font-size: 20px;
+  color: #ffffff;
+  background: #1c2a45;
+  border-radius: 10%;
+  padding: 5px;
+  z-index: 3;
+  transition: background 0.3s;
+}
+
+.toggle-arrow:hover {
+  background: #32456a;
+}
+
+.card-front img {
   width: 200px;
   height: 100px;
   margin-bottom: 20px;
 }
 
-.card h3 {
+.card-front h3 {
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
-.card p {
+.card-front p {
   font-size: 1rem;
   margin-bottom: 20px;
 }
 
-.card a {
+.card-front a {
   background-color: #38bdf8;
   color: #0f172a;
   padding: 8px 16px;
@@ -149,8 +216,18 @@ nav a {
   font-weight: bold;
 }
 
-.card a:hover {
+.card-front a:hover {
   background-color: #0ea5e9;
+}
+
+.card-back h3 {
+  font-size: 2rem;
+}
+
+.card-back pre {
+  font-size: 1rem;
+  text-wrap: wrap;
+  white-space: pre-wrap;
 }
 
 #learn-section {
@@ -184,9 +261,10 @@ nav a {
   transition: transform 0.3s ease, letter-spacing 0.3s ease;
 }
 
-.external-link:hover {
+.external-link:hover,
+nav div a:hover {
   color: #38bdf8;
-  transform: scale(1.2);
+  transform: scale(1.1);
   letter-spacing: 1px;
 }
 

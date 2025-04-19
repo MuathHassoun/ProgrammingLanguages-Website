@@ -1,0 +1,96 @@
+.about-us {
+  text-align: center;
+  padding: 20px 20px;
+  background-color: #1e293b;
+}
+
+.about-us h2 {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+}
+
+.about-us p {
+  font-size: 1.5rem;
+  margin: 40px 80px;
+}
+
+.team-cards {
+  display: flex;
+  justify-content: center;
+  gap: 150px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.about-card-container {
+  width: 400px;
+  height: 450px;
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  transform-origin: right center;
+}
+
+.about-card-inner:hover {
+  transform: translateX(-80%) rotateY(-180deg);
+  margin-left: -20px;
+}
+
+.about-card-front,
+.about-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  backface-visibility: hidden;
+}
+
+.about-card-front {
+  background-color: #2d3e5f;
+  text-align: center;
+  z-index: 2;
+}
+
+.about-card-back {
+  background-color: #1c2a45;
+  transform: rotateY(180deg);
+  text-align: left;
+  overflow-y: auto;
+}
+
+.about-card-front img {
+  width: 200px;
+  height: 150px;
+  margin-bottom: 20px;
+}
+
+.about-card-front h3 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.about-card-front p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.about-card-back h3 {
+  font-size: 2rem;
+}
+
+.about-card-back pre {
+  font-size: 1.2rem;
+  text-wrap: wrap;
+  white-space: pre-wrap;
+}
