@@ -1,0 +1,10 @@
+GitHub Command Lines:
+
+git init
+git add .
+git remote add origin httpsgithub.comMuathHassounProgrammingLanguages-Website.git
+git pull origin main
+git commit -m Message
+git branch -m master main  OR git push origin master
+git push origin main
+git remote -v
