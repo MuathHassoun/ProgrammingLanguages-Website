@@ -2,6 +2,10 @@
   font-family: 'Times New Roman', Times, serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -15,14 +19,18 @@ header {
   text-align: center;
 }
 
-header h1 {
+header a{
+  text-decoration: none;
+}
+
+header a h1 {
   margin: 0;
   font-size: 2rem;
   color: #f1f5f9;
   transition: transform 0.3s ease;
 }
 
-header h1:hover {
+header a h1:hover {
   color: #38bdf8;
   transform: scale(1.5);
   cursor: pointer;
@@ -143,6 +151,42 @@ nav a {
 
 .card a:hover {
   background-color: #0ea5e9;
+}
+
+#learn-section {
+  padding: 2rem;
+  background-color: #0f172a;
+  color: #f1f5f9;
+}
+
+.learn-section {
+  padding: 2.5rem;
+  background-color: #0f172a;
+  color: #f1f5f9;
+  line-height: 1.8;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #38bdf8;
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  color: #7dd3fc;
+  margin-top: 1.5rem;
+}
+
+.external-link {
+  color: #7dd3fc;
+  text-decoration: underline;
+}
+
+.final-tip {
+  margin-top: 2rem;
+  font-style: italic;
+  color: #94a3b8;
 }
 
 footer {
