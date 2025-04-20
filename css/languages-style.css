@@ -56,6 +56,10 @@
   border: none;
 }
 
+.language-frame .compiler{
+  height: 90vh;
+}
+
 .extra-section {
   background-color: #065541;
   border-left: 4px solid #000000;
