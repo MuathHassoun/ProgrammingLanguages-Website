@@ -1,0 +1,40 @@
+.waves {
+  position: relative;
+  height: 120px;
+  background: rgba(55, 121, 180, 0.5);
+  box-shadow: inset 0 0 50px rgba(48, 45, 45, 0.5);
+  transition: 500ms;
+  overflow: hidden;
+}
+
+.waves::before,
+.waves::after {
+  content: '';
+  position: absolute;
+  width: 300vw;
+  height: 300vw;
+  top: -70vw;
+  left: 50%;
+  transform: translate(-50%, -75%);
+}
+
+.waves::before {
+  border-radius: 35%;
+  background: rgba(59, 130, 246, 1);
+  animation: waves 8s linear infinite;
+}
+
+.waves::after {
+  border-radius: 35%;
+  background: rgb(30, 41, 59);
+  animation: waves 15s linear infinite;
+}
+
+@keyframes waves {
+  0% {
+    transform: translate(-50%, -75%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -75%) rotate(360deg);
+  }
+}
