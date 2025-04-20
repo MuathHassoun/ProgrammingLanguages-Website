@@ -85,7 +85,8 @@
 
 .contact-us-content form label,
 .login-content form label,
-.register-content form label {
+.register-content form label,
+.forgot-content form label {
   font-size: 0.95rem;
   color: #e2e8f0;
   font-weight: 500;
@@ -112,7 +113,8 @@
 
 .contact-us-content form button,
 .login-content form button,
-.register-content form button {
+.register-content form button,
+.forgot-content form button {
   background-color: #38bdf8;
   color: #0f172a;
   padding: 12px 24px;
