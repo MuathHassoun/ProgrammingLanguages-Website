@@ -5,13 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CodeWorld Website</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/embellishment-style.css" />
   <link rel="stylesheet" href="css/waves-style.css" />
   <link rel="icon" href="img/icon/icon.png" type="image/x-icon" />
 </head>
 <body>
   <!-- Header -->
   <header>
-    <a href="#learn-section"><h1>Learn Programming Languages</h1></a>
+    <div class="logo">
+      <a href="index.html" class="logo-link">
+        <img class="logo-icon" src="./img/icon/icon.png" alt="CodeWorld Logo" />
+        <h1 class="website-title">CodeWorld!</h1>
+      </a>
+      <a href="#learn-section" class="section-subtitle-link">
+        <h1 class="section-subtitle">Learn Programming Languages</h1>
+      </a>
+
+      <section class="x-container">
+        <section class="x-dimension">
+          <div class="xcircle" style="--i:0;"></div>
+          <div class="xcircle" style="--i:1;"></div>
+          <div class="xcircle" style="--i:2;"></div>
+          <div class="xcircle" style="--i:3;"></div>
+          <div class="xcircle" style="--i:4;"></div>
+          <div class="xcircle" style="--i:5;"></div>
+          <div class="xcircle" style="--i:6;"></div>
+          <div class="xcircle" style="--i:7;"></div>
+          <div class="xcircle" style="--i:8;"></div>
+          <div class="xcircle" style="--i:9;"></div>
+          <div class="xcircle" style="--i:10;"></div>
+        </section>
+      </section>
+    </div>
+
     <nav>
       <div class="nav-center">
         <a href="index.html">Home</a>
@@ -45,7 +71,9 @@
           <div class="inner-card">
             <div class="card-front">
               <!--https://via.placeholder.com/150-->
-              <img src="img/languages/python.jpg" alt="Python">
+              <div class="card-front-image">
+                <img src="img/languages/python.jpg" alt="Python">
+              </div>
               <h3>Python</h3>
               <p>Great for web development, data analysis, and artificial intelligence.</p>
               <a href="html_pages/Compare.html#python">Learn More</a>
@@ -82,7 +110,9 @@
         <section class="card-wrapper">
           <div class="inner-card">
             <div class="card-front">
-              <img src="img/languages/java.jpg" alt="Java">
+              <div class="card-front-image">
+                <img src="img/languages/java.jpg" alt="Java">
+              </div>
               <h3>Java</h3>
               <p>The language of the web for creating interactive websites.</p>
               <a href="html_pages/Compare.html#java">Learn More</a>
@@ -119,7 +149,9 @@
         <section class="card-wrapper">
           <div class="inner-card">
             <div class="card-front">
-              <img src="img/languages/kotlin.jpg" alt="Kotlin">
+              <div class="card-front-image">
+                <img src="img/languages/kotlin.jpg" alt="Kotlin">
+              </div>
               <h3>Kotlin</h3>
               <p>The modern language for Android development.</p>
               <a href="html_pages/Compare.html#kotlin">Learn More</a>
@@ -156,7 +188,9 @@
         <section class="card-wrapper">
           <div class="inner-card">
             <div class="card-front">
-              <img src="img/languages/javascript.png" alt="JavaScript">
+              <div class="card-front-image">
+                <img src="img/languages/javascript.png" alt="JavaScript">
+              </div>
               <h3>JavaScript</h3>
               <p>The language of the web for creating interactive websites.</p>
               <a href="html_pages/Compare.html#javascript">Learn More</a>
@@ -193,7 +227,9 @@
         <section class="card-wrapper">
           <div class="inner-card">
             <div class="card-front">
-              <img src="img/languages/php.jpg" alt="PHP">
+              <div class="card-front-image">
+                <img src="img/languages/php.jpg" alt="PHP">
+              </div>
               <h3>PHP</h3>
               <p>A popular scripting language for web development and server-side applications.</p>
               <a href="html_pages/Compare.html#php">Learn More</a>
@@ -230,7 +266,9 @@
         <section class="card-wrapper">
           <div class="inner-card">
             <div class="card-front">
-              <img src="img/languages/html.jpg" alt="HTML">
+              <div class="card-front-image">
+                <img src="img/languages/html.jpg" alt="HTML">
+              </div>
               <h3>HTML</h3>
               <p>The foundation of web development.</p>
               <a href="html_pages/Compare.html#html">Learn More</a>
@@ -267,7 +305,9 @@
         <section class="card-wrapper">
           <div class="inner-card">
             <div class="card-front">
-              <img src="img/languages/css.jpg" alt="CSS">
+              <div class="card-front-image">
+                <img src="img/languages/css.jpg" alt="CSS">
+              </div>
               <h3>CSS</h3>
               <p>Style the web with beautiful layouts and designs.</p>
               <a href="html_pages/Compare.html#css">Learn More</a>
@@ -304,7 +344,9 @@
         <section class="card-wrapper">
           <div class="inner-card">
             <div class="card-front">
-              <img src="img/languages/cpp.jpg" alt="C++">
+              <div class="card-front-image">
+                <img src="img/languages/cpp.jpg" alt="C++">
+              </div>
               <h3>C++</h3>
               <p>Used for high-performance applications and game development.</p>
               <a href="html_pages/Compare.html#cpp">Learn More</a>
@@ -341,7 +383,9 @@
         <section class="card-wrapper">
           <div class="inner-card">
             <div class="card-front">
-              <img src="img/languages/csharpp.jpg" alt="C#">
+              <div class="card-front-image">
+                <img src="img/languages/csharpp.jpg" alt="C#">
+              </div>
               <h3>C#</h3>
               <p>Used for high-performance applications and game development.</p>
               <a href="html_pages/Compare.html#csharp">Learn More</a>
@@ -383,18 +427,18 @@
       But where do you begin? This guide walks you through a clear, structured path to becoming a confident programmer.
     </p>
 
-    <h3 class="section-subtitle">1. Start With the Right Language</h3>
+    <h3 class="learn-section-subtitle">1. Start With the Right Language</h3>
     <p>
       If you're new, don’t overthink it. Choose a beginner-friendly language like <strong>Python</strong> or <strong>JavaScript</strong>. These languages are widely used, readable, and have massive communities full of tutorials and support.
     </p>
 
-    <h3 class="section-subtitle">2. Master the Fundamentals</h3>
+    <h3 class="learn-section-subtitle">2. Master the Fundamentals</h3>
     <p>
       Focus on core programming concepts first: <strong>variables, data types, loops, conditionals, functions,</strong> and <strong>arrays/lists</strong>. These are the building blocks of any language.
       Don’t rush — take your time to understand how things work and practice writing simple programs.
     </p>
 
-    <h3 class="section-subtitle">3. Build Real Projects</h3>
+    <h3 class="learn-section-subtitle">3. Build Real Projects</h3>
     <p>The best way to learn is by doing. Start small:</p>
     <ul>
       <li>Build a simple calculator</li>
@@ -404,7 +448,7 @@
     </ul>
     <p>These projects will help you connect the theory to real-world problem-solving.</p>
 
-    <h3 class="section-subtitle">4. Use Quality Learning Resources</h3>
+    <h3 class="learn-section-subtitle">4. Use Quality Learning Resources</h3>
     <p>
       Make use of trusted platforms:
       <br>👉 <a href="https://www.freecodecamp.org/" target="_blank" class="external-link">FreeCodeCamp</a>
@@ -412,7 +456,7 @@
       <br>👉 <a href="https://www.codecademy.com/" target="_blank" class="external-link">Codecademy</a>
     </p>
 
-    <h3 class="section-subtitle">5. Join a Developer Community</h3>
+    <h3 class="learn-section-subtitle">5. Join a Developer Community</h3>
     <p>
       Learning alone can be tough. Surround yourself with other learners and developers:
       <br>🌐 Ask questions on <strong>Stack Overflow</strong>
@@ -420,12 +464,12 @@
       <br>🤝 Contribute to open source on <strong>GitHub</strong>
     </p>
 
-    <h3 class="section-subtitle">6. Practice Through Challenges</h3>
+    <h3 class="learn-section-subtitle">6. Practice Through Challenges</h3>
     <p>
       Websites like <a href="https://leetcode.com/" target="_blank" class="external-link">LeetCode</a> and <a href="https://www.hackerrank.com/" target="_blank" class="external-link">HackerRank</a> offer algorithm challenges to boost your logical thinking and speed.
     </p>
 
-    <h3 class="section-subtitle">7. Stay Consistent & Curious</h3>
+    <h3 class="learn-section-subtitle">7. Stay Consistent & Curious</h3>
     <p>
       Programming is not about memorizing code — it’s about solving problems. Code a little every day, learn from your mistakes, and always stay curious. Explore how things work, read documentation, and never stop building.
     </p>

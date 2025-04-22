@@ -24,7 +24,7 @@
 
 .about-card-container {
   width: 400px;
-  height: 450px;
+  height: 500px;
   perspective: 1000px;
   display: flex;
   justify-content: center;
