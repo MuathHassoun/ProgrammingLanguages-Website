@@ -1,8 +1,16 @@
+:root {
+  --main-container-color: #12213a;
+  --wave-bg: rgba(44, 74, 104, 0.4);
+  --wave-shadow: rgba(20, 29, 42, 0.5);
+  --wave-before-color: rgba(46, 139, 186, 1);
+  --wave-after-color: #12213a;
+}
+
 .waves {
   position: relative;
   height: 120px;
-  background: rgba(55, 121, 180, 0.5);
-  box-shadow: inset 0 0 50px rgba(48, 45, 45, 0.5);
+  background: var(--wave-bg);
+  box-shadow: inset 0 0 50px var(--wave-shadow);
   transition: 500ms;
   overflow: hidden;
 }
@@ -20,13 +28,13 @@
 
 .waves::before {
   border-radius: 35%;
-  background: rgba(59, 130, 246, 1);
+  background: var(--wave-before-color);
   animation: waves 8s linear infinite;
 }
 
 .waves::after {
   border-radius: 35%;
-  background: rgb(30, 41, 59);
+  background: var(--wave-after-color);
   animation: waves 15s linear infinite;
 }
 

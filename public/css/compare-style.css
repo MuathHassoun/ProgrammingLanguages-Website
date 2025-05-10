@@ -1,3 +1,16 @@
+:root {
+  --color-bg-body: #12213a;
+  --color-table-bg: #1a2a48;
+  --color-table-border: #243b66;
+  --color-th-bg: #2e4a7d;
+  --color-text-white: #ffffff;
+  --color-text-secondary: #cbd5e1;
+}
+
+body {
+  background-color: var(--color-bg-body);
+}
+
 .compare-section-header {
   display: flex;
   flex-direction: column;
@@ -17,16 +30,25 @@ table {
   border-collapse: collapse;
   width: 100%;
   font-family: Arial, sans-serif;
+  background-color: var(--color-table-bg);
 }
 
 th, td {
-  border: 1px solid #132a55;
+  border: 2px solid var(--color-table-border);
   padding: 8px;
   text-align: center;
+  width: 300px;
+  font-size: 0.8rem;
+  color: var(--color-text-white);
+}
+
+.language-cell {
+  width: 100px;
+  font-size: 0.9rem;
 }
 
 th {
-  background-color: #132a55;
+  background-color: var(--color-th-bg);
 }
 
 caption {
@@ -47,14 +69,14 @@ caption {
 .compare-second-part-section h3 {
   font-size: 2rem;
   margin-bottom: 30px;
-  color: #fff;
+  color: var(--color-text-white);
   font-style: italic;
 }
 
 .compare-second-part-section p {
   font-size: 1.1rem;
   margin-bottom: 30px;
-  color: #cbd5e1;
+  color: var(--color-text-secondary);
 }
 
 .compare-second-part-section ol {
@@ -64,6 +86,5 @@ caption {
 .compare-second-part-section ol li {
   font-size: 1rem;
   margin-bottom: 10px;
-  color: #cbd5e1;
+  color: var(--color-text-secondary);
 }
-
