@@ -63,7 +63,7 @@
   <header>
     <div class="logo">
       <a href="index.php" class="logo-link">
-        <img class="logo-icon" src="./img/icon/icon.png" alt="CodeWorld Logo" />
+        <img class="logo-icon" src="img/icon/icon.png" alt="CodeWorld Logo" />
         <h1 class="website-title">CodeWorld!</h1>
       </a>
       <a href="#learn-section" class="section-subtitle-link">
