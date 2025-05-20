@@ -44,17 +44,25 @@
   }
 
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $conn = require_once '../database-dir/connect.php';
-    if ($_SESSION['db_connected'] === false) {
-      error_log("Database connection failed: " . $conn->connect_error);
-      $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
-      header("Location: /php-pages/client-side/display_error.php");
-      exit;
-    }
-
     if (isset($_POST['login'])) {
       $username = $_POST['username'] ?? '';
       $password = $_POST['password'] ?? '';
+
+      //    $conn = require_once '../database-dir/connect.php';
+      //    if ($_SESSION['db_connected'] === false) {
+      //      error_log("Database connection failed: " . $conn->connect_error);
+      //      $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+      //      header("Location: /php-pages/client-side/display_error.php");
+      //      exit;
+      //    }
+      $conn = new mysqli("localhost", "root", "", "progLangWebsite");
+      if($conn->connect_error) {
+        error_log("Database connection failed: " . $conn->connect_error);
+        $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+        header("Location: /php-pages/client-side/display_error.php");
+        exit;
+      }
+
       if (str_contains($username, "admin")) {
         $stmt = $conn->prepare("SELECT username, password FROM admins WHERE username = ? LIMIT 1");
       } else {
@@ -66,6 +74,7 @@
       $result = $stmt->get_result();
       $user = $result->fetch_assoc();
       $stmt->close();
+      $conn->close();
 
       if ($user && password_verify($password, $user['password'])) {
         $_SESSION['successful_msg'] = "Login successful!|Welcome, " . htmlspecialchars($user['username']);
@@ -77,8 +86,6 @@
         } else {
           $_SESSION['isAdmin'] = false;
         }
-
-        $conn->close();
         afterSuccess();
       } else {
         echo '<script src="../../js/actions/sweet-alert2-js.js"></script>';
@@ -102,6 +109,21 @@
                 };
               </script>";
         } else {
+          //    $conn = require_once '../database-dir/connect.php';
+          //    if ($_SESSION['db_connected'] === false) {
+          //      error_log("Database connection failed: " . $conn->connect_error);
+          //      $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+          //      header("Location: /php-pages/client-side/display_error.php");
+          //      exit;
+          //    }
+          $conn = new mysqli("localhost", "root", "", "progLangWebsite");
+          if($conn->connect_error) {
+            error_log("Database connection failed: " . $conn->connect_error);
+            $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+            header("Location: /php-pages/client-side/display_error.php");
+            exit;
+          }
+
           if (str_contains($username, "admin")) {
             $account_stmt = $conn->prepare("INSERT INTO accounts (username, role) VALUES (?, 'admin')");
             $stmt = $conn->prepare("INSERT INTO admins (username, email, password) VALUES (?, ?, ?)");
@@ -116,7 +138,6 @@
           try {
             $account_stmt->execute();
             $account_stmt->close();
-
             if ($stmt->execute()) {
               $_SESSION['successful_msg'] = "Registration successful!|Welcome, " . htmlspecialchars($username);
               $_SESSION['logged_in'] = true;
@@ -127,9 +148,6 @@
               } else {
                 $_SESSION['isAdmin'] = false;
               }
-
-              $stmt->close();
-              $conn->close();
               afterSuccess();
             } else {
               echo '<script src="../../js/actions/sweet-alert2-js.js"></script>';
@@ -139,6 +157,9 @@
                   };
                 </script>";
             }
+
+            $stmt->close();
+            $conn->close();
           } catch (Exception $e) {
             error_log("Registration failed: " . $e->getMessage());
             $_SESSION['error_message'] = "An error occurred while completing your registration. Please try again later.\n" . $e->getMessage();
@@ -155,7 +176,6 @@
             </script>";
       }
     }
-    $conn->close();
   }
 ?>
 

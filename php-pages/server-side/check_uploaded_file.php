@@ -22,7 +22,7 @@ if (isset($_alternative) && $_alternative['error'] === UPLOAD_ERR_OK) {
   $mimeType = mime_content_type($tmpName);
 
   if ($check !== false && in_array($extension, $allowedExtensions) && in_array($mimeType, $allowedMimeTypes)) {
-    $uniqueName = uniqid('lang_', true) . '.' . $extension;
+    $uniqueName = uniqid('lang_', true) . 'server-side' . $extension;
     $uploadDir = 'uploads/';
     $destination = $uploadDir . $uniqueName;
 

@@ -127,8 +127,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $imageName         = $_FILES['languageImage']['name'];
         $languageImageData = getImage($tmpPath, $imageName);
 
-        $conn = require_once '../database-dir/connect.php';
-        if ($_SESSION['db_connected'] === false) {
+//        $conn = require_once '../database-dir/connect.php';
+//        if ($_SESSION['db_connected'] === false) {
+//          error_log("Database connection failed: " . $conn->connect_error);
+//          $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+//          header("Location: /php-pages/client-side/display_error.php");
+//          exit;
+//        }
+        $conn = new mysqli("localhost", "root", "", "progLangWebsite");
+        if($conn->connect_error) {
           error_log("Database connection failed: " . $conn->connect_error);
           $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
           header("Location: /php-pages/client-side/display_error.php");
@@ -167,6 +174,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
           $conn->close();
           afterProcess();
         } catch (Exception $e) {
+          $stmt->close();
+          $conn->close();
+
           error_log("Insert failed: " . $e->getMessage());
           $_SESSION['error_message'] = "An error occurred while saving the language data. Please try again later.\n" . $e->getMessage();
           header("Location: /php-pages/client-side/display_error.php");
@@ -219,8 +229,15 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $objectOriented && $communitySupport && $marketDemand && $syntaxSimplicity
         && $backendDev && $frontendDev && $documentation && $video_embed && $compilerUrl) {
 
-        $conn = require_once '../database-dir/connect.php';
-        if ($_SESSION['db_connected'] === false) {
+//        $conn = require_once '../database-dir/connect.php';
+//        if ($_SESSION['db_connected'] === false) {
+//          error_log("Database connection failed: " . $conn->connect_error);
+//          $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+//          header("Location: /php-pages/client-side/display_error.php");
+//          exit;
+//        }
+        $conn = new mysqli("localhost", "root", "", "progLangWebsite");
+        if($conn->connect_error) {
           error_log("Database connection failed: " . $conn->connect_error);
           $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
           header("Location: /php-pages/client-side/display_error.php");
@@ -262,6 +279,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
           include '../server-side/clear_edit_session.php';
           afterProcess();
         } catch (Exception $e) {
+          $stmt->close();
+          $conn->close();
           error_log("Insert failed: " . $e->getMessage());
           $_SESSION['error_message'] = "An error occurred while saving the language data. Please try again later.\n" . $e->getMessage();
           header("Location: /php-pages/client-side/display_error.php");

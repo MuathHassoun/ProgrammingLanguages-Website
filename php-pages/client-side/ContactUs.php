@@ -38,8 +38,15 @@
     $message = trim($_POST['message']);
     $from = trim($_SESSION['username']);
 
-    $conn = require_once '../database-dir/connect.php';
-    if ($_SESSION['db_connected'] === false) {
+//    $conn = require_once '../database-dir/connect.php';
+//    if ($_SESSION['db_connected'] === false) {
+//      error_log("Database connection failed: " . $conn->connect_error);
+//      $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+//      header("Location: /php-pages/client-side/display_error.php");
+//      exit;
+//    }
+    $conn = new mysqli("localhost", "root", "", "progLangWebsite");
+    if($conn->connect_error) {
       error_log("Database connection failed: " . $conn->connect_error);
       $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
       header("Location: /php-pages/client-side/display_error.php");
@@ -67,7 +74,6 @@
                 </script>";
         }
         $stmt->close();
-        $conn->close();
       } else {
         echo "<script>
                 window.onload = function() {
@@ -82,6 +88,7 @@
               };
             </script>";
     }
+    $conn->close();
   } else {
     echo "<script>
             window.onload = function() {

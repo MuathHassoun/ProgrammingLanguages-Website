@@ -33,9 +33,15 @@ if (isset($_SESSION['new-user']) && $_SESSION['new-user'] === true) {
         )
   ";
 
-//  $conn = new mysqli("localhost", "root", "", "progLangWebsite");
-  $conn = require_once '../database-dir/connect.php';
-  if ($_SESSION['db_connected'] === false) {
+//  $conn = require_once '../database-dir/connect.php';
+//  if ($_SESSION['db_connected'] === false) {
+//    error_log("Database connection failed: " . $conn->connect_error);
+//    $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+//    header("Location: /php-pages/client-side/display_error.php");
+//    exit;
+//  }
+  $conn = new mysqli("localhost", "root", "", "progLangWebsite");
+  if($conn->connect_error) {
     error_log("Database connection failed: " . $conn->connect_error);
     $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
     header("Location: /php-pages/client-side/display_error.php");
@@ -140,8 +146,15 @@ if (isset($_SESSION['new-user']) && $_SESSION['new-user'] === true) {
   $username = $_SESSION['username'];
   $sql = "SELECT * FROM languages WHERE username = ?";
 
-  $conn = require_once '../database-dir/connect.php';
-  if ($_SESSION['db_connected'] === false) {
+//  $conn = require_once '../database-dir/connect.php';
+//  if ($_SESSION['db_connected'] === false) {
+//    error_log("Database connection failed: " . $conn->connect_error);
+//    $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+//    header("Location: /php-pages/client-side/display_error.php");
+//    exit;
+//  }
+  $conn = new mysqli("localhost", "root", "", "progLangWebsite");
+  if($conn->connect_error) {
     error_log("Database connection failed: " . $conn->connect_error);
     $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
     header("Location: /php-pages/client-side/display_error.php");
