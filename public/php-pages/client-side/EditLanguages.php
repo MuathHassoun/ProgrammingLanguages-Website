@@ -127,10 +127,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $imageName         = $_FILES['languageImage']['name'];
         $languageImageData = getImage($tmpPath, $imageName);
 
-        $conn = new mysqli("sql209.infinityfree.com", "if0_39035367", "1pKEWmDL12VrMX", "if0_39035367_XXX");
-        if ($conn->connect_error) {
-          die("Connection failed: " . $conn->connect_error);
+        $conn = require_once '../database-dir/connect.php';
+        if ($_SESSION['db_connected'] === false) {
+          error_log("Database connection failed: " . $conn->connect_error);
+          $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+          header("Location: /php-pages/client-side/display_error.php");
+          exit;
         }
+
         $stmt = $conn->prepare("
             INSERT INTO languages (
                 username, language_name, language_logo, image_name, image_binary, definition, description,
@@ -215,10 +219,14 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         $objectOriented && $communitySupport && $marketDemand && $syntaxSimplicity
         && $backendDev && $frontendDev && $documentation && $video_embed && $compilerUrl) {
 
-        $conn = new mysqli("sql209.infinityfree.com", "if0_39035367", "1pKEWmDL12VrMX", "if0_39035367_XXX");
-        if ($conn->connect_error) {
-          die("Connection failed: " . $conn->connect_error);
+        $conn = require_once '../database-dir/connect.php';
+        if ($_SESSION['db_connected'] === false) {
+          error_log("Database connection failed: " . $conn->connect_error);
+          $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+          header("Location: /php-pages/client-side/display_error.php");
+          exit;
         }
+
         $stmt = $conn->prepare("
             UPDATE languages SET
                 language_logo = ?, image_name = ?, image_binary = ?, definition = ?, description = ?, full_article = ?,

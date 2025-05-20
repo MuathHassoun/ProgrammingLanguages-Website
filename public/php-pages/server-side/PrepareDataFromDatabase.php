@@ -34,10 +34,14 @@ if (isset($_SESSION['new-user']) && $_SESSION['new-user'] === true) {
   ";
 
 //  $conn = new mysqli("localhost", "root", "", "progLangWebsite");
-  $conn = new mysqli("sql209.infinityfree.com", "if0_39035367", "1pKEWmDL12VrMX", "if0_39035367_XXX");
-  if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+  $conn = require_once '../database-dir/connect.php';
+  if ($_SESSION['db_connected'] === false) {
+    error_log("Database connection failed: " . $conn->connect_error);
+    $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+    header("Location: /php-pages/client-side/display_error.php");
+    exit;
   }
+
   $stmt = $conn->prepare($sql);
   if (!$stmt) {
     die("Prepare failed: " . $conn->error);
@@ -136,10 +140,14 @@ if (isset($_SESSION['new-user']) && $_SESSION['new-user'] === true) {
   $username = $_SESSION['username'];
   $sql = "SELECT * FROM languages WHERE username = ?";
 
-  $conn = new mysqli("sql209.infinityfree.com", "if0_39035367", "1pKEWmDL12VrMX", "if0_39035367_XXX");
-  if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+  $conn = require_once '../database-dir/connect.php';
+  if ($_SESSION['db_connected'] === false) {
+    error_log("Database connection failed: " . $conn->connect_error);
+    $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+    header("Location: /php-pages/client-side/display_error.php");
+    exit;
   }
+
   $stmt = $conn->prepare($sql);
   $stmt->bind_param("s", $username);
   $stmt->execute();

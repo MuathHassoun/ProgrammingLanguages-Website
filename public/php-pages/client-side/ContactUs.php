@@ -38,9 +38,12 @@
     $message = trim($_POST['message']);
     $from = trim($_SESSION['username']);
 
-    $conn = new mysqli("sql209.infinityfree.com", "if0_39035367", "1pKEWmDL12VrMX", "if0_39035367_XXX");
-    if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
+    $conn = require_once '../database-dir/connect.php';
+    if ($_SESSION['db_connected'] === false) {
+      error_log("Database connection failed: " . $conn->connect_error);
+      $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+      header("Location: /php-pages/client-side/display_error.php");
+      exit;
     }
 
     if ($subject && $name && $email && $message && $from) {
