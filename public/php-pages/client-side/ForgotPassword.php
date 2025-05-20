@@ -4,23 +4,23 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="../css/embellishment-style.css" />
-  <link rel="stylesheet" href="../css/waves-style.css" />
-  <link rel="stylesheet" href="../css/contact-style.css" />
-  <link rel="stylesheet" href="../css/forgot-password-style.css" />
-  <link rel="icon" href="../img/icon/icon.png" type="image/x-icon" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/embellishment-style.css" />
+  <link rel="stylesheet" href="../../css/waves-style.css" />
+  <link rel="stylesheet" href="../../css/contact-style.css" />
+  <link rel="stylesheet" href="../../css/forgot-password-style.css" />
+  <link rel="icon" href="../../img/icon/icon.png" type="image/x-icon" />
   <title>Forgot Password! Page</title>
 </head>
 <body>
   <!-- Header -->
   <header>
     <div class="logo">
-      <a href="../index.html" class="logo-link">
-        <img class="logo-icon" src="../img/icon/icon.png" alt="CodeWorld Logo" />
+      <a href="../../index.php" class="logo-link">
+        <img class="logo-icon" src="../../img/icon/icon.png" alt="CodeWorld Logo" />
         <h1 class="website-title">CodeWorld!</h1>
       </a>
-      <a href="../index.html#learn-section" class="section-subtitle-link">
+      <a href="../../index.php#learn-section" class="section-subtitle-link">
         <h1 class="section-subtitle">Learn Programming Languages</h1>
       </a>
 
@@ -43,15 +43,17 @@
 
     <nav>
       <div class="nav-center">
-        <a href="../index.html">Home</a>
-        <a href="Languages.html#languages-section">Learn Languages</a>
-        <a href="EditLanguages.html#edit-section">Edit/New</a>
-        <a href="Compare.html#compare-section">Compare</a>
-        <a href="AboutUs.html#about-us-section">About Us</a>
-        <a href="ContactUs.html#contact-us-section">Contact Us</a>
+        <a href="../../index.php">Home</a>
+        <a href="Languages.php#languages-section">Learn Languages</a>
+        <a href="Documentation.php#doc-section">Documentation</a>
+        <a href="EditLanguages.php#edit-section">Edit/New</a>
+        <a href="Compare.php#compare-section">Compare</a>
+        <a href="AboutUs.php#about-us-section">About Us</a>
+        <a href="ContactUs.php#contact-us-section">Contact Us</a>
       </div>
       <div class="nav-auth">
-        <a href="Authentication.html#authentication-section">Authentication</a>
+        <a href="Authentication.php#authentication-section" class="not-active-user">Authentication</a>
+        <a href="Logout.php" class="logout-not-active">Logout</a>
       </div>
     </nav>
   </header>
@@ -76,8 +78,8 @@
         <section class="forgot-links">
           <p class="other-actions-label">Other Actions</p>
           <ul class="other-actions">
-            <li><a href="Authentication.html?mode=login#authentication-section">Back to Login Page</a></li>
-            <li><a href="Authentication.html?mode=register#authentication-section">Create an Account</a></li>
+            <li><a href="Authentication.php?mode=login#authentication-section">Back to Login Page</a></li>
+            <li><a href="Authentication.php?mode=register#authentication-section">Create an Account</a></li>
           </ul>
         </section>
       </div>

@@ -1,3 +1,18 @@
+<?php
+  session_start();
+  if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+    echo <<<HTML
+            <script src="../../js/actions/authentication-js.js"></script>
+            <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                switchAuth();
+                logout();
+              });
+            </script>
+          HTML;
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,21 +20,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Us Page</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="../css/embellishment-style.css" />
-  <link rel="stylesheet" href="../css/waves-style.css" />
-  <link rel="stylesheet" href="../css/about-style.css" />
-  <link rel="icon" href="../img/icon/icon.png" type="image/x-icon" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/embellishment-style.css" />
+  <link rel="stylesheet" href="../../css/waves-style.css" />
+  <link rel="stylesheet" href="../../css/about-style.css" />
+  <link rel="icon" href="../../img/icon/icon.png" type="image/x-icon" />
 </head>
 <body>
   <!-- Header -->
   <header>
     <div class="logo">
-      <a href="../index.html" class="logo-link">
-        <img class="logo-icon" src="../img/icon/icon.png" alt="CodeWorld Logo" />
+      <a href="../../index.php" class="logo-link">
+        <img class="logo-icon" src="../../img/icon/icon.png" alt="CodeWorld Logo" />
         <h1 class="website-title">CodeWorld!</h1>
       </a>
-      <a href="../index.html#learn-section" class="section-subtitle-link">
+      <a href="../../index.php#learn-section" class="section-subtitle-link">
         <h1 class="section-subtitle">Learn Programming Languages</h1>
       </a>
 
@@ -42,14 +57,16 @@
 
     <nav>
       <div class="nav-center">
-        <a href="../index.html">Home</a>
-        <a href="Languages.html#languages-section">Learn Languages</a>
-        <a href="EditLanguages.html#edit-section">Edit/New</a>
-        <a href="Compare.html#compare-section">Compare</a>
-        <a href="ContactUs.html#contact-us-section">Contact Us</a>
+        <a href="../../index.php">Home</a>
+        <a href="Languages.php#languages-section">Learn Languages</a>
+        <a href="Documentation.php#doc-section">Documentation</a>
+        <a href="EditLanguages.php#edit-section">Edit/New</a>
+        <a href="Compare.php#compare-section">Compare</a>
+        <a href="ContactUs.php#contact-us-section">Contact Us</a>
       </div>
       <div class="nav-auth">
-        <a href="Authentication.html#authentication-section">Authentication</a>
+        <a href="Authentication.php#authentication-section" class="not-active-user">Authentication</a>
+        <a href="Logout.php" class="logout-not-active">Logout</a>
       </div>
     </nav>
   </header>
@@ -64,7 +81,7 @@
       <div class="about-card-container">
         <div class="about-card-inner">
           <div class="about-card-front">
-            <img src="../img/Our/muath-photo.jpg" alt="Muath Hassoun">
+            <img src="../../img/Our/muath-photo.jpg" alt="Muath Hassoun">
             <h3>Muath Hassoun</h3>
             <p>
               A Computer Engineer with a deep passion for web development and modern technologies. Muath believes in the power of clean code and intuitive design to create interactive, user-friendly websites.
@@ -94,7 +111,7 @@
       <div class="about-card-container">
         <div class="about-card-inner">
           <div class="about-card-front">
-            <img src="../img/Our/amr-photo.jpg" alt="Amr Wawi">
+            <img src="../../img/Our/amr-photo.jpg" alt="Amr Wawi">
             <h3>Amr Wawi</h3>
             <p>
               A Computer Engineer who loves diving into data and exploring the world of artificial intelligence. Amr combines creativity and logic to build smart solutions for the future.

@@ -13,6 +13,7 @@
   --secondary-container-color: #1b2b45;
   --toggle-container-color: #0f1b30;
   --component-color: #21334e;
+  --button-hover-color: #4ecdc4;
   --accent-color: #4ecdc4;
   --text-color: #e2e8f0;
   --placeholder-color: #94a3b8;
@@ -121,6 +122,12 @@ form {
   color: var(--accent-color);
 }
 
+.warning {
+  color: var(--accent-color);
+  display: none;
+  font-size: 14px;
+}
+
 .forgot-link {
   margin: -15px 0 15px;
 }
@@ -141,6 +148,12 @@ form {
   font-size: 16px;
   color: var(--text-color);
   font-weight: 600;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background: var(--button-hover-color);
+  color: black;
 }
 
 .social-icons {
@@ -288,3 +301,19 @@ form {
     font-size: 30px;
   }
 }
+
+.swal2-confirm-btn-text-color {
+  color: #ffffff !important;
+}
+
+/*.fade-in {*/
+/*  opacity: 0;*/
+/*  animation: fadeIn 1s ease-in-out forwards;*/
+/*  animation-delay: 1s;*/
+/*}*/
+
+/*@keyframes fadeIn {*/
+/*  to {*/
+/*    opacity: 1;*/
+/*  }*/
+/*}*/

@@ -112,6 +112,22 @@ nav a:hover {
   letter-spacing: 1px;
 }
 
+.not-active-user {
+  display: inline;
+}
+
+.active-user {
+  display: none;
+}
+
+.logout-active {
+  display: inline;
+}
+
+.logout-not-active {
+  display: none;
+}
+
 .hero {
   text-align: center;
   padding: 100px 20px;

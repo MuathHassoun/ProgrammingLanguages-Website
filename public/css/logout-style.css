@@ -1,0 +1,93 @@
+:root {
+  --color-header-footer: #12213a;
+  --color-background: #0f172a;
+  --color-primary-text: #e2e8f0;
+  --color-secondary-text: #94a3b8;
+  --color-link: #38bdf8;
+  --color-link-hover: #0ea5e9;
+  --color-card-shadow: rgba(0, 0, 0, 0.2);
+}
+
+* {
+  font-family: 'Times New Roman', Times, serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-background);
+  color: var(--color-primary-text);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: center;
+}
+
+.logo-icon {
+  height: 80px;
+  width: auto;
+  cursor: pointer;
+}
+
+.website-title {
+  font-size: 2rem;
+  margin-top: 20px;
+  color: var(--color-primary-text);
+}
+
+.logout-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 20px;
+  min-height: 70vh;
+}
+
+.logout-box {
+  background-color: #1e293b;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px var(--color-card-shadow);
+  max-width: 500px;
+}
+
+.logout-box h2 {
+  font-size: 2rem;
+  margin: 20px 0 10px;
+}
+
+.logout-box p {
+  color: var(--color-secondary-text);
+  margin-bottom: 30px;
+}
+
+.logout-icon {
+  font-size: 4rem;
+  color: var(--color-link);
+  cursor: pointer;
+}
+
+.btn-logout-home {
+  background-color: var(--color-link);
+  color: var(--color-background);
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.btn-logout-home:hover {
+  background-color: var(--color-link-hover);
+}
+
+footer {
+  background-color: var(--color-header-footer);
+  text-align: center;
+  padding: 20px;
+  color: var(--color-secondary-text);
+}

@@ -1,0 +1,25 @@
+:root {
+  --toggle-sidebar-button-bg: #1c3a36;
+  --toggle-sidebar-border: #2c3a4f;
+  --toggle-sidebar-button-hover: #2e5f59;
+  --toggle-sidebar-button-text: #e2e8f0;
+}
+
+.toggle-sidebar-btn {
+  position: absolute;
+  top: 170px;
+  left: 20px;
+  background-color: var(--toggle-sidebar-button-bg);
+  border: 1px solid var(--toggle-sidebar-border);
+  color: var(--toggle-sidebar-button-text);
+  font-size: 1.2rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-sidebar-btn:hover {
+  background-color: var(--toggle-sidebar-button-hover);
+}

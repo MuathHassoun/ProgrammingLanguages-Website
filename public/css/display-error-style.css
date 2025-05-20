@@ -1,0 +1,103 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1e293b;
+  color: #b91c1c;
+  margin: 0;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(168, 85, 85, 0.15);
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.error-container {
+  max-width: 620px;
+  min-width: 370px;
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 10px rgb(244 63 94 / 0.3);
+  position: relative;
+  margin-top: -30px;
+}
+
+h1 {
+  margin-top: 0;
+  color: #991b1b;
+}
+
+.error-msg {
+  background-color: #fca5a5;
+  border-radius: 4px;
+  padding: 1rem;
+  white-space: pre-wrap;
+  font-family: Consolas, monospace;
+  font-size: 0.95rem;
+  color: #7f1d1d;
+  margin-bottom: 1rem;
+}
+
+.error-info {
+  font-size: 0.9rem;
+  color: #991b1b;
+  margin-bottom: 1rem;
+}
+
+button {
+  background-color: #b91c1c;
+  border: none;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: #7f1d1d;
+}
+
+.close-btn {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  color: #991b1b;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #ffffff;
+}
+
+button:hover .close-btn {
+  color: #ffffff;
+}
+
+.loading-spinner {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #b91c1c;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 2rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

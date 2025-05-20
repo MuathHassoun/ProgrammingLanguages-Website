@@ -23,7 +23,7 @@ body {
   display: flex;
   min-height: 100vh;
   background-color: var(--main-container-color);
-  margin: 50px 20px;
+  margin: 55px 15px;
 }
 
 .edit-new-container {
@@ -49,11 +49,13 @@ body {
   display: flex;
   flex-direction: row;
   gap: 10px;
+  padding-bottom: 5px;
 }
 
 .rate-label {
   font-weight: bold;
   padding-right: 10px;
+  padding-top: 8px;
   vertical-align: center;
   color: var(--label-color);
   width: 250px;
@@ -61,7 +63,9 @@ body {
 
 .language-input,
 .language-url,
+.language-logo,
 .language-textarea,
+.language-definition,
 .language-select {
   width: 100%;
   padding: 8px 10px;
@@ -74,17 +78,28 @@ body {
 
 .language-input::placeholder,
 .language-url::placeholder,
-.language-textarea::placeholder {
+.language-logo::placeholder,
+.language-textarea::placeholder,
+.largest-textarea::placeholder,
+.language-definition::placeholder {
   color: var(--placeholder-color);
 }
 
 .language-textarea {
+  width: 100%;
   max-width: 100%;
-  height: 100px;
+  height: 120px;
+  resize: vertical;
+  box-sizing: border-box;
 }
 
-#definitionInput, #editDefinitionInput {
-  height: 60px;
+.largest-textarea {
+  height: 200px;
+}
+
+.language-definition {
+  max-width: 100%;
+  height: 40px;
 }
 
 .language-select {
@@ -138,11 +153,13 @@ body {
   text-align: center;
 }
 
-button[type="submit"] {
+button[type="submit"],
+input[type="button"] {
   background-color: var(--button-bg);
   color: var(--text-color);
-  width: 250px;
+  width: 220px;
   height: 50px;
+  margin-right: 50px;
   padding: 10px 20px;
   border: none;
   font-size: 16px;
@@ -151,6 +168,48 @@ button[type="submit"] {
   transition: background-color 0.3s ease;
 }
 
-button[type="submit"]:hover {
+button[type="submit"]:hover,
+input[type="button"]:hover {
   background-color: var(--button-hover-bg);
+}
+
+input[type="file"].language-url {
+  background-color: var(--component-color);
+  color: var(--input-text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 16px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+input[type="file"].language-url::file-selector-button {
+  background-color: var(--button-bg);
+  color: var(--text-color);
+  border: none;
+  width: 200px;
+  padding: 8px 16px;
+  margin-right: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 17px;
+}
+
+input[type="file"].language-url::file-selector-button:hover {
+  background-color: var(--button-hover-bg);
+  font-family: "Times New Roman", Times, serif;
+}
+
+.current-image-label {
+  width: 100%;
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 10px;
+  background-color: var(--select-focus-shadow);
+  color: var(--text-color);
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid var(--select-focus-shadow);
 }

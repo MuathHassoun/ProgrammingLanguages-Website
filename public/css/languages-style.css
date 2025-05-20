@@ -22,6 +22,7 @@ body {
 .languages {
   display: flex;
   min-height: 100vh;
+  margin: -5px 0 -5px -5px;
 }
 
 .sidebar {
@@ -57,8 +58,8 @@ body {
 }
 
 .language-frame,
-.language-form {
-  margin-right: 20px;
+.language-form,
+.doc-frame {
   margin-left: 20px;
   margin-bottom: 20px;
   padding: 20px;
@@ -74,13 +75,13 @@ body {
 
 .language-frame iframe {
   width: 100%;
-  height: 70vh;
+  height: 100vh;
   border: none;
   padding-bottom: 20px;
 }
 
 .language-frame .compiler {
-  height: 92vh;
+  height: 100vh;
 }
 
 .extra-section {
