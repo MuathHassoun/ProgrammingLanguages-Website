@@ -60,14 +60,14 @@
       <div class="nav-center">
       </div>
       <div class="nav-auth">
-        <a href="Authentication.php#authentication-section" class="not-active-user">Authentication</a>
+        <a href="authentication.php#authentication-section" class="not-active-user">Authentication</a>
       </div>
     </nav>
   </header>
 
   <main class="logout-container">
     <div class="logout-box">
-      <a href="Authentication.php#authentication-section" rel="noopener noreferrer"><i class='bx bx-log-out-circle logout-icon'></i></a>
+      <a href="authentication.php#authentication-section" rel="noopener noreferrer"><i class='bx bx-log-out-circle logout-icon'></i></a>
       <h2>You have been logged out</h2>
       <p>Thank you for visiting. We hope to see you again soon.</p>
       <a href="../../index.php" class="btn-logout-home">Return to Homepage</a>

@@ -1,16 +1,19 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
   session_start();
-  $errorMsg = '';
-  if (!empty($_GET['error'])) {
-    $errorMsg = $_GET['error'];
-  } elseif (!empty($_SESSION['error_message'])) {
-    $errorMsg = $_SESSION['error_message'];
-    unset($_SESSION['error_message']);
-  }
+}
 
-  function currentDateTime(): string {
-    return date('Y-m-d H:i:s');
-  }
+$errorMsg = '';
+if (!empty($_GET['error'])) {
+  $errorMsg = $_GET['error'];
+} elseif (!empty($_SESSION['error_message'])) {
+  $errorMsg = $_SESSION['error_message'];
+  unset($_SESSION['error_message']);
+}
+
+function currentDateTime(): string {
+  return date('Y-m-d H:i:s');
+}
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +43,7 @@
     <div class="error-msg"><?= htmlspecialchars($errorMsg ?: 'Sorry, something went wrong but no detailed error message was provided. Please try again later or contact support if the issue persists.') ?></div>
     <div class="error-info">Time: <?= currentDateTime() ?></div>
     <button onclick="location.reload()">Reload page</button>
-    <button onclick="history.back()" aria-label="Return to the previous page">Back to Form</button>
+    <button onclick="history.back()" aria-label="Return to the previous page">Go Back</button>
   </div>
 
   <script>

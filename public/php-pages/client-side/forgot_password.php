@@ -44,16 +44,21 @@
     <nav>
       <div class="nav-center">
         <a href="../../index.php">Home</a>
-        <a href="Languages.php#languages-section">Learn Languages</a>
-        <a href="Documentation.php#doc-section">Documentation</a>
-        <a href="EditLanguages.php#edit-section">Edit/New</a>
-        <a href="Compare.php#compare-section">Compare</a>
-        <a href="AboutUs.php#about-us-section">About Us</a>
-        <a href="ContactUs.php#contact-us-section">Contact Us</a>
+        <a href="languages.php#languages-section">Learn Languages</a>
+        <a href="documentation.php#doc-section">Documentation</a>
+        <a href="edit_languages.php#edit-section">Edit/New</a>
+        <a href="compare.php#compare-section">Compare</a>
+        <a href="about_us.php#about-us-section">About Us</a>
+        <a href="contact_us.php#contact-us-section">Contact Us</a>
       </div>
       <div class="nav-auth">
-        <a href="Authentication.php#authentication-section" class="not-active-user">Authentication</a>
-        <a href="Logout.php" class="logout-not-active">Logout</a>
+        <?php
+        if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
+          echo '<a href="../admin-side/admin-dashboard.php#admin-dashboard-main" class="admin-dashboard">Dashboard </a>';
+        }
+        ?>
+        <a href="authentication.php#authentication-section" class="not-active-user">Authentication</a>
+        <a href="logout.php" class="logout-not-active">Logout</a>
       </div>
     </nav>
   </header>
@@ -78,8 +83,8 @@
         <section class="forgot-links">
           <p class="other-actions-label">Other Actions</p>
           <ul class="other-actions">
-            <li><a href="Authentication.php?mode=login#authentication-section">Back to Login Page</a></li>
-            <li><a href="Authentication.php?mode=register#authentication-section">Create an Account</a></li>
+            <li><a href="authentication.php?mode=login#authentication-section">Back to Login Page</a></li>
+            <li><a href="authentication.php?mode=register#authentication-section">Create an Account</a></li>
           </ul>
         </section>
       </div>

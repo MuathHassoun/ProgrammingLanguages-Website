@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $_SESSION['editCompilerUrl']      = $_POST['editCompilerUrl']      ?? null;
 } else {
   http_response_code(405);
-  $errorMessage = "Method Not Allowed. Undefined array key 'languageImage' at EditLanguages.php line 44";
+  $errorMessage = "Method Not Allowed. Undefined array key 'languageImage' at edit_languages.php line 44";
   $error = urlencode($errorMessage);
   header("Location: /php-pages/client-side/display_error.php?error=$error");
   exit;

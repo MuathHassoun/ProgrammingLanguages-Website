@@ -1,50 +1,55 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
   session_start();
-  if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-    include './php-pages/server-side/PrepareDataFromDatabase.php';
-  } else {
-    $_SESSION['logged_in'] = false;
-    $_SESSION['new-user'] = false;
-    include './php-pages/server-side/PrepareInitialData.php';
-  }
+}
+if(!isset($_SESSION['site-started'])) {
+  $_SESSION['site-started'] = true;
+  include './php-pages/admin-side/get-admins-data.php';
+}
 
-  if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-    echo <<<HTML
-          <script src="js/actions/authentication-js.js"></script>
-          <script>
-            document.addEventListener("DOMContentLoaded", function () {
-              switchAuth();
-              logout();
-            });
-          </script>
-          HTML;
-  }
+if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+  $_SESSION['alter-username'] = $_SESSION['username'] ?? '';
+  include './php-pages/server-side/prepare_data_from_database.php';
+  echo <<<HTML
+        <script src="js/actions/authentication-js.js"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            switchAuth();
+            logout();
+          });
+        </script>
+        HTML;
+} else {
+  $_SESSION['logged_in'] = false;
+  $_SESSION['new-user'] = false;
+  include './php-pages/server-side/prepare_initial_data.php';
+}
 
-  if (isset($_SESSION['successful_msg'])) {
-    $msgParts = explode('|', $_SESSION['successful_msg'], 2);
-    $title = htmlspecialchars($msgParts[0] ?? 'Success', ENT_QUOTES);
-    $text  = htmlspecialchars($msgParts[1] ?? '', ENT_QUOTES);
-    unset($_SESSION['successful_msg']);
+if (isset($_SESSION['successful_msg'])) {
+  $msgParts = explode('|', $_SESSION['successful_msg'], 2);
+  $title = htmlspecialchars($msgParts[0] ?? 'Success', ENT_QUOTES);
+  $text  = htmlspecialchars($msgParts[1] ?? '', ENT_QUOTES);
+  unset($_SESSION['successful_msg']);
 
-    echo '<script src="js/actions/sweet-alert2-js.js"></script>';
-    echo "<script>
+  echo '<script src="js/actions/sweet-alert2-js.js"></script>';
+  echo "<script>
+          document.addEventListener('DOMContentLoaded', () => {
+              showAlert('success', '$title', '$text', '#0f1b30');
+          });
+        </script>";
+} elseif (isset($_SESSION['msg-from-edit-page'])) {
+  $status = htmlspecialchars($_SESSION['status'], ENT_QUOTES);
+  $msg_title = htmlspecialchars($_SESSION['msg_title'], ENT_QUOTES);
+  $message = htmlspecialchars($_SESSION['message'], ENT_QUOTES);
+  unset($_SESSION['msg-from-edit-page']);
+
+  echo '<script src="js/actions/sweet-alert2-js.js"></script>';
+  echo "<script>
             document.addEventListener('DOMContentLoaded', () => {
-                showAlert('success', '{$title}', '{$text}', '#0f1b30');
+                showAlert('$status', '$msg_title', '$message', '#0f1b30');
             });
           </script>";
-  } elseif (isset($_SESSION['msg-from-edit-page'])) {
-    $status = htmlspecialchars($_SESSION['status'], ENT_QUOTES);
-    $msg_title = htmlspecialchars($_SESSION['msg_title'], ENT_QUOTES);
-    $message = htmlspecialchars($_SESSION['message'], ENT_QUOTES);
-
-    echo '<script src="js/actions/sweet-alert2-js.js"></script>';
-    echo "<script>
-              document.addEventListener('DOMContentLoaded', () => {
-                  showAlert('{$status}', '{$msg_title}', '{$message}', '#0f1b30');
-              });
-            </script>";
-    unset($_SESSION['msg-from-edit-page']);
-  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -54,9 +59,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CodeWorld Website!</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/popup-style.css" />
   <link rel="stylesheet" href="css/embellishment-style.css" />
   <link rel="stylesheet" href="css/waves-style.css" />
   <link rel="icon" href="img/icon/icon.png" type="image/x-icon" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <!-- Header -->
@@ -90,26 +98,87 @@
     <nav>
       <div class="nav-center">
         <a href="index.php">Home</a>
-        <a href="php-pages/client-side/Languages.php#languages-section">Learn Languages</a>
-        <a href="php-pages/client-side/Documentation.php#doc-section">Documentation</a>
-        <a href="php-pages/client-side/EditLanguages.php#edit-section">Edit/New</a>
-        <a href="php-pages/client-side/Compare.php#compare-section">Compare</a>
-        <a href="php-pages/client-side/AboutUs.php#about-us-section">About Us</a>
-        <a href="php-pages/client-side/ContactUs.php#contact-us-section">Contact Us</a>
+        <a href="php-pages/client-side/languages.php#languages-section">Learn Languages</a>
+        <a href="php-pages/client-side/documentation.php#doc-section">Documentation</a>
+        <a href="php-pages/client-side/edit_languages.php#edit-section">Edit/New</a>
+        <a href="php-pages/client-side/compare.php#compare-section">Compare</a>
+        <a href="php-pages/client-side/about_us.php#about-us-section">About Us</a>
+        <a href="php-pages/client-side/contact_us.php#contact-us-section">Contact Us</a>
       </div>
       <div class="nav-auth">
-        <a href="php-pages/client-side/Authentication.php#authentication-section" class="not-active-user">Authentication</a>
-        <a href="php-pages/client-side/Logout.php" class="logout-not-active">Logout</a>
+        <?php
+        if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
+          echo '<a href="php-pages/admin-side/admin-dashboard.php#admin-dashboard-main" class="admin-dashboard">Dashboard </a>';
+        }
+        ?>
+        <a href="php-pages/client-side/authentication.php#authentication-section" class="not-active-user">Authentication</a>
+        <a href="php-pages/client-side/logout.php" class="logout-not-active">Logout</a>
+
+        <?php
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+          include 'php-pages/server-side/notifications.php';
+          if (isset($_SESSION['has-notifications']) && $_SESSION['has-notifications'] === true) {
+            $username = $_SESSION['username'] ?? '';
+            $dataUsername = htmlspecialchars($username);
+            echo '<div class="notification-container">
+                    <a href="#" id="notification-btn" data-username="' . $dataUsername . '" class="notification-link notification-btn" title="Notifications">
+                      <i class="fas fa-bell"></i>';
+
+            if (isset($_SESSION['new_message_count']) && $_SESSION['new_message_count'] > 0) {
+              echo '<span class="badge">' . $_SESSION['new_message_count'] . '</span>';
+            }
+
+            echo '  </a>
+                    <div id="notification-popup" class="notification-popup hidden" dir="ltr">
+                      <section class="message-section section-style">
+                        <h2 class="popup-title">📨 New Replies</h2>
+                        <hr>
+                        <div class="message-list">';
+
+            if (!empty($_SESSION['user-replies']) && is_array($_SESSION['user-replies'])) {
+              foreach ($_SESSION['user-replies'] as $reply) {
+                $from = htmlspecialchars($reply['from_username']);
+                $subject = htmlspecialchars($reply['subject']);
+                $date = htmlspecialchars($reply['reply_date']);
+                $content = nl2br(htmlspecialchars($reply['reply_content']));
+
+                echo <<<HTML
+                        <div class="message-item">
+                          <div class="message-header">
+                            <p><strong>From:</strong> $from</p>
+                            <p><strong>Subject:</strong> $subject</p>
+                          </div>
+                          <div class="message-body">
+                            <p>$content</p>
+                          </div>
+                          <div class="message-footer">
+                            <small><strong>Date:</strong> $date</small>
+                          </div>
+                        </div>
+                        <hr>
+                  HTML;
+              }
+            } else {
+              echo '<div class="message-item"><p>No new replies.</p></div>';
+            }
+
+            echo '</div>
+                  </section>
+                </div>
+              </div>';
+          }
+        }
+        ?>
       </div>
     </nav>
   </header>
 
   <!-- Hero Section -->
   <section class="hero">
-    <h1>Welcome to CodeWorld!</h1>
+    <h1>Welcome, <?php echo htmlspecialchars($_SESSION['returned-full-name'] ?? ''); ?> to CodeWorld!</h1>
     <h2>Start Your Coding Journey Today</h2>
     <p>Explore different programming languages and learn how to build websites and apps from scratch.</p>
-    <a href="php-pages/client-side/Languages.php#languages-section">Get Started</a>
+    <a href="php-pages/client-side/languages.php#languages-section">Get Started</a>
   </section>
 
   <!-- Languages Section -->
@@ -211,5 +280,7 @@
   <!-- Water Wave -->
   <div class="waves"></div>
   <script src="js/app.js"></script>
+  <script src="js/actions/sweet-alert2-js.js"></script>
+  <script src="js/actions/popup-js.js"></script>
 </body>
 </html>

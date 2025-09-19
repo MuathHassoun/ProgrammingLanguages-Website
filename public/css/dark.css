@@ -1,0 +1,121 @@
+.root {
+  -fx-background-color: #181818;
+  -fx-padding: 10;
+  -fx-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tab-pane {
+  -fx-background-color: #181818;
+  -fx-tab-min-width: 110px;
+  -fx-tab-max-width: 110px;
+  -fx-background-color: transparent;
+}
+
+.tab {
+  -fx-background-color: transparent;
+  -fx-text-fill: #CCCCCC;
+  -fx-font-weight: 600;
+  -fx-padding: 8 12;
+  -fx-border-color: transparent;
+  -fx-border-width: 0 0 3 0;
+  -fx-border-style: solid;
+}
+
+.tab:selected {
+  -fx-background-color: transparent;
+  -fx-text-fill: #1DE9B6;
+  -fx-border-color: #1DE9B6;
+  -fx-border-width: 0 0 3 0;
+  -fx-font-weight: 700;
+}
+
+.progress-bar {
+  -fx-accent: #1DE9B6;
+  -fx-control-inner-background: #E0E0E0;
+  -fx-background-insets: 0;
+  -fx-padding: 0.2em;
+}
+
+.button {
+  -fx-background-color: #1DE9B6;
+  -fx-text-fill: #121212;
+  -fx-padding: 8 16;
+  -fx-background-radius: 6;
+  -fx-border-radius: 6;
+  -fx-font-weight: 600;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow( gaussian , rgba(0, 255, 215, 0.3), 5, 0, 0, 2);
+  -fx-transition: all 0.3s ease;
+}
+
+.button:hover {
+  -fx-background-color: #14B8A6;
+}
+
+.button:focused {
+  -fx-effect: dropshadow( gaussian , #00FFC8, 10, 0, 0, 0);
+  -fx-outline-color: #00FFC8;
+}
+
+.slider {
+  -fx-background-color: transparent;
+  -fx-padding: 5 0 5 0;
+}
+
+.slider .thumb {
+  -fx-background-color: #1DE9B6;
+  -fx-effect: dropshadow( gaussian , rgba(0, 255, 215, 0.5), 8, 0, 0, 0);
+}
+
+.slider .track {
+  -fx-background-color: #E0E0E0;
+  -fx-background-insets: 0.2;
+  -fx-padding: 0.2em 0;
+}
+
+.label {
+  -fx-font-size: 14px;
+  -fx-text-fill: #E0E0E0;
+  -fx-font-weight: 500;
+}
+
+.vbox {
+  -fx-spacing: 12;
+}
+
+.hbox {
+  -fx-spacing: 8;
+  -fx-alignment: center-left;
+}
+
+.check-box {
+  -fx-text-fill: #CCCCCC;
+  -fx-font-weight: 500;
+}
+
+.check-box:selected .box {
+  -fx-background-color: #1DE9B6;
+}
+
+.scroll-pane {
+  -fx-background-color: #181818;
+  -fx-text-fill: #CCCCCC;
+  -fx-font-weight: 500;
+}
+
+.scroll-pane > .viewport {
+  -fx-padding: 0;
+  -fx-background-color: transparent;
+}
+
+.scroll-pane > .scroll-bar:horizontal {
+  -fx-opacity: 0;
+  -fx-max-height: 0;
+  -fx-min-height: 0;
+  -fx-pref-height: 0;
+}
+
+.separator {
+  -fx-background-color: #E0E0E0;
+  -fx-padding: 0.5;
+}

@@ -1,100 +1,206 @@
 <?php
-  use JetBrains\PhpStorm\NoReturn;
+use JetBrains\PhpStorm\NoReturn;
+if (session_status() === PHP_SESSION_NONE) {
   session_start();
-  if (isset($_GET['active'])) {
-    $_SESSION['active-language-id'] = strtolower(trim($_GET['active']) ?? '');
+}
+
+if (isset($_GET['active'])) {
+  $_SESSION['active-language-id'] = strtolower(trim($_GET['active']) ?? '');
+}
+
+#[NoReturn] function afterProcess(): void {
+  $_SESSION['msg-from-edit-page'] = 'edit-languages-page';
+  header("Location: ../../index.php");
+  exit();
+}
+
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+  $_SESSION['login_msg'] = 'Please log in to access editing features.';
+  $_SESSION['send_from'] = 'edit-languages-page';
+  header("Location: authentication.php");
+  exit();
+} else {
+  echo <<<HTML
+        <script src="../../js/actions/authentication-js.js"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+            switchAuth();
+            logout();
+          });
+        </script>
+        HTML;
+}
+
+function getImage(string $tmpPath): string {
+  if (!is_readable($tmpPath)) {
+    throw new RuntimeException("Could not read the uploaded image from: $tmpPath");
   }
 
-  #[NoReturn] function afterProcess(): void {
-    $_SESSION['msg-from-edit-page'] = 'edit-languages-page';
-    header("Location: ../../index.php");
-    exit();
+  $binary = file_get_contents($tmpPath);
+  if ($binary === false) {
+    throw new RuntimeException("Failed to get contents of image file.");
   }
 
-  if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    $_SESSION['login_msg'] = 'Please log in to access editing features.';
-    $_SESSION['send_from'] = 'edit-languages-page';
-    header("Location: Authentication.php");
-    exit();
-  } else {
-    echo <<<HTML
-          <script src="../../js/actions/authentication-js.js"></script>
+  return $binary;
+}
+
+if (isset($_SESSION['successful_msg'])) {
+  $msgParts = explode('|', $_SESSION['successful_msg'], 2);
+  $title = htmlspecialchars($msgParts[0] ?? 'Success');
+  $text = htmlspecialchars($msgParts[1] ?? '');
+  unset($_SESSION['successful_msg']);
+
+  echo <<<successAlert
+          <script src="../../js/actions/sweet-alert2-js.js"></script>
           <script>
-            document.addEventListener("DOMContentLoaded", function () {
-              switchAuth();
-              logout();
+            document.addEventListener('DOMContentLoaded', () => {
+              showAlert('success', '$title', '$text', '#0f1b30');
             });
           </script>
-          HTML;
+          successAlert;
+}
+
+/**
+ * @param mixed $description
+ * @param mixed $full_article
+ * @param mixed $list_points
+ * @return array|void
+ */
+function convertToJSON(mixed $description, mixed $full_article, mixed $list_points) {
+  $json_description = json_encode($description, JSON_UNESCAPED_UNICODE);
+  $json_full_article = json_encode($full_article, JSON_UNESCAPED_UNICODE);
+  $json_list_points = json_encode($list_points, JSON_UNESCAPED_UNICODE);
+
+  if (json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(500);
+    $errorMessage = "Error encoding data to JSON: " . json_last_error_msg() .
+      ". Please make sure the input is correctly formatted:\n" .
+      "- Description and Full Article should be plain text (example: C is a powerful language).\n" .
+      "- List Points should be a valid JSON array (example: \"Fast: C is a powerful language\").";
+    $error = urlencode($errorMessage);
+    header("Location: display_error.php?error=$error");
+    exit;
   }
-
-  if (isset($_SESSION['successful_msg'])) {
-    $msgParts = explode('|', $_SESSION['successful_msg'], 2);
-    $title = htmlspecialchars($msgParts[0] ?? 'Success');
-    $text = htmlspecialchars($msgParts[1] ?? '');
-    unset($_SESSION['successful_msg']);
-
-    echo <<<successAlert
-            <script src="../../js/actions/sweet-alert2-js.js"></script>
-            <script>
-              document.addEventListener('DOMContentLoaded', () => {
-                showAlert('success', '$title', '$text', '#0f1b30');
-              });
-            </script>
-            successAlert;
-  }
-
-  /**
-   * @param mixed $description
-   * @param mixed $full_article
-   * @param mixed $list_points
-   * @return array|void
-   */
-  function convertToJSON(mixed $description, mixed $full_article, mixed $list_points) {
-    $json_description = json_encode($description, JSON_UNESCAPED_UNICODE);
-    $json_full_article = json_encode($full_article, JSON_UNESCAPED_UNICODE);
-    $json_list_points = json_encode($list_points, JSON_UNESCAPED_UNICODE);
-
-    if (json_last_error() !== JSON_ERROR_NONE) {
-      http_response_code(500);
-      $errorMessage = "Error encoding data to JSON: " . json_last_error_msg() .
-        ". Please make sure the input is correctly formatted:\n" .
-        "- Description and Full Article should be plain text (example: C is a powerful language).\n" .
-        "- List Points should be a valid JSON array (example: \"Fast: C is a powerful language\").";
-      $error = urlencode($errorMessage);
-      header("Location: display_error.php?error=$error");
-      exit;
-    }
-    return array($json_description, $json_full_article, $json_list_points);
-  }
+  return array($json_description, $json_full_article, $json_list_points);
+}
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    $username = $_SESSION['username'];
-    if(isset($_POST['addNewBtn'])){
-      $languageName      = $_POST['languageName'];
-      $languageLogo      = $_POST['languageLogo'];
-      $languageImage     = $_FILES['languageImage'];
-      $definition        = $_POST['definition'];
-      $description       = $_POST['description'];
-      $full_article      = $_POST['full_article'];
-      $list_points       = $_POST['list_points'];
-      $easyToLearn       = $_POST['easyToLearn'];
-      $webDev            = $_POST['webDev'];
-      $mobileDev         = $_POST['mobileDev'];
-      $gameDev           = $_POST['gameDev'];
-      $aiMl              = $_POST['aiMl'];
-      $performance       = $_POST['performance'];
-      $objectOriented    = $_POST['objectOriented'];
-      $communitySupport  = $_POST['communitySupport'];
-      $marketDemand      = $_POST['marketDemand'];
-      $syntaxSimplicity  = $_POST['syntaxSimplicity'];
-      $backendDev        = $_POST['backendDev'];
-      $frontendDev       = $_POST['frontendDev'];
-      $documentation     = $_POST['docLink'];
-      $video_embed       = $_POST['videoEmbed'];
-      $compilerUrl       = $_POST['compilerUrl'];
+  $username = $_SESSION['username'];
+  if(isset($_POST['addNewBtn'])){
+    $languageName      = $_POST['languageName'];
+    $languageLogo      = $_POST['languageLogo'];
+    $languageImage     = $_FILES['languageImage'];
+    $definition        = $_POST['definition'];
+    $description       = $_POST['description'];
+    $full_article      = $_POST['full_article'];
+    $list_points       = $_POST['list_points'];
+    $easyToLearn       = $_POST['easyToLearn'];
+    $webDev            = $_POST['webDev'];
+    $mobileDev         = $_POST['mobileDev'];
+    $gameDev           = $_POST['gameDev'];
+    $aiMl              = $_POST['aiMl'];
+    $performance       = $_POST['performance'];
+    $objectOriented    = $_POST['objectOriented'];
+    $communitySupport  = $_POST['communitySupport'];
+    $marketDemand      = $_POST['marketDemand'];
+    $syntaxSimplicity  = $_POST['syntaxSimplicity'];
+    $backendDev        = $_POST['backendDev'];
+    $frontendDev       = $_POST['frontendDev'];
+    $documentation     = $_POST['docLink'];
+    $video_embed       = $_POST['videoEmbed'];
+    $compilerUrl       = $_POST['compilerUrl'];
 
-      $_FILES['image-file-to-check'] = $languageImage;
+    $_FILES['image-file-to-check'] = $languageImage;
+    include '../server-side/check_uploaded_file.php';
+    if (isset($_SESSION['image_valid']) && $_SESSION['image_valid'] === false) {
+      $_SESSION['error_message'] = "There was a problem with the uploaded image. Please try again.";
+      unset($_SESSION['image_valid']);
+      header("Location: display_error.php");
+      exit;
+    }
+
+    list($json_description, $json_full_article, $json_list_points) = convertToJSON($description, $full_article, $list_points);
+    if ($languageImage === null) {
+      $_SESSION['error_message'] = "Undefined array key 'languageImage' at edit_languages.php line 44";
+      header("Location: display_error.php");
+      exit;
+    }
+
+    if($languageName && $languageLogo && $languageImage && $definition &&
+      $json_description && $full_article && $list_points && $easyToLearn &&
+      $webDev && $mobileDev && $gameDev && $aiMl && $performance &&
+      $objectOriented && $communitySupport && $marketDemand && $syntaxSimplicity
+      && $backendDev && $frontendDev && $documentation && $video_embed && $compilerUrl) {
+
+      if (!isset($_FILES['image-file-to-check']) || $_FILES['image-file-to-check']['error'] !== UPLOAD_ERR_OK) {
+        $_SESSION['error_message'] = "Please upload a valid image file.";
+        header("Location: display_error.php");
+        exit;
+      }
+
+      $otherResources    = $_POST['otherResources'];
+      $imageName         = $_FILES['image-file-to-check']['name'];
+      try {
+        $languageImageData = getImage($_FILES['image-file-to-check']['tmp_name']);
+      } catch (RuntimeException $e) {
+        $_SESSION['error_message'] = $e->getMessage();
+        header("Location: display_error.php");
+        exit;
+      }
+
+      $conn = require(__DIR__ . '/../database-dir/connect.php');
+      if ($_SESSION['db_connected'] === false) {
+        error_log("Database connection failed: " . $conn->connect_error);
+        $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+        header("Location: /php-pages/client-side/display_error.php");
+        exit;
+      }
+
+      $stmt = $conn->prepare("
+          INSERT INTO languages (
+              username, language_name, language_logo, image_name, image_binary, definition, description,
+              full_article, list_points, easy_to_learn, web_dev, mobile_dev, ai_ml, game_dev,
+              performance, oop_supported, community_support, job_market_demand, syntax_simplicity,
+              backend, frontend, documentation, video_embed, compiler_link, other_resources
+          ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+      ");
+
+      $stmt->bind_param(
+        "sssssssssssssssssssssssss",
+        $username, $languageName, $languageLogo, $imageName, $languageImageData, $definition,
+        $json_description, $json_full_article, $json_list_points, $easyToLearn, $webDev, $mobileDev, $aiMl,
+        $gameDev, $performance, $objectOriented, $communitySupport, $marketDemand, $syntaxSimplicity,
+        $backendDev, $frontendDev, $documentation, $video_embed, $compilerUrl, $otherResources
+      );
+      $stmt->send_long_data(4, $languageImageData);
+
+      try {
+        if ($stmt->execute()) {
+          $_SESSION['status'] = "success";
+          $_SESSION['msg_title'] = "Language Added!";
+          $_SESSION['message'] = "The new language has been added successfully.";
+        } else {
+          $_SESSION['status'] = "error";
+          $_SESSION['msg_title'] = "Insert Failed!";
+          $_SESSION['message'] = "Failed to add the language: '" . htmlspecialchars($stmt->error) . "'.";
+        }
+        $stmt->close();
+        $conn->close();
+        afterProcess();
+      } catch (Exception $e) {
+        $stmt->close();
+        $conn->close();
+
+        error_log("Insert failed: " . $e->getMessage());
+        $_SESSION['error_message'] = "An error occurred while saving the language data. Please try again later.\n" . $e->getMessage();
+        header("Location: /php-pages/client-side/display_error.php");
+        exit;
+      }
+    }
+  } elseif(isset($_POST['editBtn'])) {
+    if (isset($_FILES['editLanguageImage']) && $_FILES['editLanguageImage']['error'] === UPLOAD_ERR_OK) {
+      $image = $_FILES['editLanguageImage'];
+      $_FILES['image-file-to-check'] = $image;
       include '../server-side/check_uploaded_file.php';
       if (isset($_SESSION['image_valid']) && $_SESSION['image_valid'] === false) {
         $_SESSION['error_message'] = "There was a problem with the uploaded image. Please try again.";
@@ -102,193 +208,128 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         header("Location: display_error.php");
         exit;
       }
+    }
 
-      list($json_description, $json_full_article, $json_list_points) = convertToJSON($description, $full_article, $list_points);
-      if ($languageImage === null) {
-        $_SESSION['error_message'] = "Undefined array key 'languageImage' at EditLanguages.php line 44";
-        header("Location: display_error.php");
+    include '../server-side/save_to_session.php';
+    $languageName       = $_SESSION['editLanguageName'];
+    $languageLogo       = $_SESSION['editLanguageLogo'];
+    $imageName          = $_SESSION['editImageName'];
+    $languageImage      = $_SESSION['editLanguageImage'];
+    $definition         = $_SESSION['editDefinition'];
+    $description        = $_SESSION['editDescription'];
+    $full_article       = $_SESSION['edit_full_article'];
+    $list_points        = $_SESSION['edit_list_points'];
+    $easyToLearn        = $_SESSION['editEasyToLearn'];
+    $webDev             = $_SESSION['editWebDev'];
+    $mobileDev          = $_SESSION['editMobileDev'];
+    $gameDev            = $_SESSION['editGameDev'];
+    $aiMl               = $_SESSION['editAiMl'];
+    $performance        = $_SESSION['editPerformance'];
+    $objectOriented     = $_SESSION['editObjectOriented'];
+    $communitySupport   = $_SESSION['editCommunitySupport'];
+    $marketDemand       = $_SESSION['editMarketDemand'];
+    $syntaxSimplicity   = $_SESSION['editSyntaxSimplicity'];
+    $backendDev         = $_SESSION['editBackendDev'];
+    $frontendDev        = $_SESSION['editFrontendDev'];
+    $documentation      = $_SESSION['edit-documentation'];
+    $video_embed        = $_SESSION['editVideoEmbed'];
+    $compilerUrl        = $_SESSION['editCompilerUrl'];
+    $otherResourcesEdit = $_SESSION['otherResourcesEdit'];
+
+    list($json_description, $json_full_article, $json_list_points) = convertToJSON($description, $full_article, $list_points);
+    if($languageName && $languageLogo && $imageName && $languageImage && $definition &&
+      $json_description && $json_full_article && $json_list_points && $easyToLearn &&
+      $webDev && $mobileDev && $gameDev && $aiMl && $performance &&
+      $objectOriented && $communitySupport && $marketDemand && $syntaxSimplicity
+      && $backendDev && $frontendDev && $documentation && $video_embed && $compilerUrl) {
+
+      $conn = require(__DIR__ . '/../database-dir/connect.php');
+      if ($_SESSION['db_connected'] === false) {
+        error_log("Database connection failed: " . $conn->connect_error);
+        $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+        header("Location: /php-pages/client-side/display_error.php");
         exit;
       }
 
-      if($languageName && $languageLogo && $languageImage && $definition &&
-        $json_description && $full_article && $list_points && $easyToLearn &&
-        $webDev && $mobileDev && $gameDev && $aiMl && $performance &&
-        $objectOriented && $communitySupport && $marketDemand && $syntaxSimplicity
-        && $backendDev && $frontendDev && $documentation && $video_embed && $compilerUrl) {
+      $stmt = $conn->prepare("
+          UPDATE languages SET
+              language_logo = ?, image_name = ?, image_binary = ?, definition = ?, description = ?, full_article = ?,
+              list_points = ?, easy_to_learn = ?, web_dev = ?, mobile_dev = ?, ai_ml = ?, game_dev = ?,
+              performance = ?, oop_supported = ?, community_support = ?, job_market_demand = ?, syntax_simplicity = ?,
+              backend = ?, frontend = ?, documentation = ?, video_embed = ?, compiler_link = ?, other_resources = ?
+          WHERE username = ? AND language_name = ?
+      ");
 
-        if (!isset($_FILES['languageImage']) || $_FILES['languageImage']['error'] !== UPLOAD_ERR_OK) {
-          $_SESSION['error_message'] = "Please upload a valid image file.";
-          header("Location: display_error.php");
-          exit;
+      $stmt->bind_param(
+        "sssssssssssssssssssssssss",
+        $languageLogo, $imageName, $languageImage, $definition, $json_description,
+        $json_full_article, $json_list_points, $easyToLearn, $webDev, $mobileDev, $aiMl,
+        $gameDev, $performance, $objectOriented, $communitySupport, $marketDemand,
+        $syntaxSimplicity, $backendDev, $frontendDev, $documentation, $video_embed, $compilerUrl,
+        $otherResourcesEdit, $username, $languageName
+      );
+      $stmt->send_long_data(2, $languageImage);
+
+      try {
+        if ($stmt->execute()) {
+          $_SESSION['status'] = "success";
+          $_SESSION['msg_title'] = "Update Successful!";
+          $_SESSION['message'] = "The language data has been updated successfully.";
+        } else {
+          $_SESSION['status'] = "error";
+          $_SESSION['msg_title'] = "Update Failed!";
+          $_SESSION['message'] = "Failed to update the language: '" . htmlspecialchars($stmt->error) . "'.";
         }
-
-        $otherResources    = $_POST['otherResources'];
-        $tmpPath           = $_FILES['languageImage']['tmp_name'];
-        $imageName         = $_FILES['languageImage']['name'];
-        $languageImageData = getImage($tmpPath, $imageName);
-
-//        $conn = require_once '../database-dir/connect.php';
-//        if ($_SESSION['db_connected'] === false) {
-//          error_log("Database connection failed: " . $conn->connect_error);
-//          $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
-//          header("Location: /php-pages/client-side/display_error.php");
-//          exit;
-//        }
-        $conn = new mysqli("localhost", "root", "", "progLangWebsite");
-        if($conn->connect_error) {
-          error_log("Database connection failed: " . $conn->connect_error);
-          $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
-          header("Location: /php-pages/client-side/display_error.php");
-          exit;
-        }
-
-        $stmt = $conn->prepare("
-            INSERT INTO languages (
-                username, language_name, language_logo, image_name, image_binary, definition, description,
-                full_article, list_points, easy_to_learn, web_dev, mobile_dev, ai_ml, game_dev,
-                performance, oop_supported, community_support, job_market_demand, syntax_simplicity,
-                backend, frontend, documentation, video_embed, compiler_link, other_resources
-            ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-        ");
-
-        $stmt->bind_param(
-          "sssssssssssssssssssssssss",
-          $username, $languageName, $languageLogo, $imageName, $languageImageData, $definition,
-          $json_description, $json_full_article, $json_list_points, $easyToLearn, $webDev, $mobileDev, $aiMl,
-          $gameDev, $performance, $objectOriented, $communitySupport, $marketDemand, $syntaxSimplicity,
-          $backendDev, $frontendDev, $documentation, $video_embed, $compilerUrl, $otherResources
-        );
-        $stmt->send_long_data(4, $languageImageData);
-
-        try {
-          if ($stmt->execute()) {
-            $_SESSION['status'] = "success";
-            $_SESSION['msg_title'] = "Language Added!";
-            $_SESSION['message'] = "The new language has been added successfully.";
-          } else {
-            $_SESSION['status'] = "error";
-            $_SESSION['msg_title'] = "Insert Failed!";
-            $_SESSION['message'] = "Failed to add the language: '" . htmlspecialchars($stmt->error) . "'.";
-          }
-          $stmt->close();
-          $conn->close();
-          afterProcess();
-        } catch (Exception $e) {
-          $stmt->close();
-          $conn->close();
-
-          error_log("Insert failed: " . $e->getMessage());
-          $_SESSION['error_message'] = "An error occurred while saving the language data. Please try again later.\n" . $e->getMessage();
-          header("Location: /php-pages/client-side/display_error.php");
-          exit;
-        }
+        echo 'end';
+        $stmt->close();
+        $conn->close();
+        include '../server-side/clear_edit_session.php';
+        afterProcess();
+      } catch (Exception $e) {
+        $stmt->close();
+        $conn->close();
+        error_log("Insert failed: " . $e->getMessage());
+        $_SESSION['error_message'] = "An error occurred while saving the language data. Please try again later.\n" . $e->getMessage();
+        header("Location: /php-pages/client-side/display_error.php");
+        exit;
       }
-    } elseif(isset($_POST['editBtn'])) {
-      if (isset($_FILES['editLanguageImage']) && $_FILES['editLanguageImage']['error'] === UPLOAD_ERR_OK) {
-        $image = $_FILES['editLanguageImage'];
-        $_FILES['image-file-to-check'] = $image;
-        include '../server-side/check_uploaded_file.php';
-        if (isset($_SESSION['image_valid']) && $_SESSION['image_valid'] === false) {
-          $_SESSION['error_message'] = "There was a problem with the uploaded image. Please try again.";
-          unset($_SESSION['image_valid']);
-          header("Location: display_error.php");
-          exit;
-        }
+    }
+  } elseif(isset($_POST['deleteBtn'])) {
+    $languageName = $_POST['editLanguageName'];
+    if($languageName) {
+      $conn = require(__DIR__ . '/../database-dir/connect.php');
+      if ($_SESSION['db_connected'] === false) {
+        error_log("Database connection failed: " . $conn->connect_error);
+        $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
+        header("Location: /php-pages/client-side/display_error.php");
+        exit;
       }
 
-      include '../server-side/save_to_session.php';
-      $languageName       = $_SESSION['editLanguageName'];
-      $languageLogo       = $_SESSION['editLanguageLogo'];
-      $imageName          = $_SESSION['editImageName'];
-      $languageImage      = $_SESSION['editLanguageImage'];
-      $definition         = $_SESSION['editDefinition'];
-      $description        = $_SESSION['editDescription'];
-      $full_article       = $_SESSION['edit_full_article'];
-      $list_points        = $_SESSION['edit_list_points'];
-      $easyToLearn        = $_SESSION['editEasyToLearn'];
-      $webDev             = $_SESSION['editWebDev'];
-      $mobileDev          = $_SESSION['editMobileDev'];
-      $gameDev            = $_SESSION['editGameDev'];
-      $aiMl               = $_SESSION['editAiMl'];
-      $performance        = $_SESSION['editPerformance'];
-      $objectOriented     = $_SESSION['editObjectOriented'];
-      $communitySupport   = $_SESSION['editCommunitySupport'];
-      $marketDemand       = $_SESSION['editMarketDemand'];
-      $syntaxSimplicity   = $_SESSION['editSyntaxSimplicity'];
-      $backendDev         = $_SESSION['editBackendDev'];
-      $frontendDev        = $_SESSION['editFrontendDev'];
-      $documentation      = $_SESSION['edit-documentation'];
-      $video_embed        = $_SESSION['editVideoEmbed'];
-      $compilerUrl        = $_SESSION['editCompilerUrl'];
-      $otherResourcesEdit = $_SESSION['otherResourcesEdit'];
-
-      list($json_description, $json_full_article, $json_list_points) = convertToJSON($description, $full_article, $list_points);
-      if($languageName && $languageLogo && $imageName && $languageImage && $definition &&
-        $json_description && $json_full_article && $json_list_points && $easyToLearn &&
-        $webDev && $mobileDev && $gameDev && $aiMl && $performance &&
-        $objectOriented && $communitySupport && $marketDemand && $syntaxSimplicity
-        && $backendDev && $frontendDev && $documentation && $video_embed && $compilerUrl) {
-
-//        $conn = require_once '../database-dir/connect.php';
-//        if ($_SESSION['db_connected'] === false) {
-//          error_log("Database connection failed: " . $conn->connect_error);
-//          $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
-//          header("Location: /php-pages/client-side/display_error.php");
-//          exit;
-//        }
-        $conn = new mysqli("localhost", "root", "", "progLangWebsite");
-        if($conn->connect_error) {
-          error_log("Database connection failed: " . $conn->connect_error);
-          $_SESSION['error_message'] = "We encountered a technical issue while processing your request. Please try again later.";
-          header("Location: /php-pages/client-side/display_error.php");
-          exit;
-        }
-
-        $stmt = $conn->prepare("
-            UPDATE languages SET
-                language_logo = ?, image_name = ?, image_binary = ?, definition = ?, description = ?, full_article = ?,
-                list_points = ?, easy_to_learn = ?, web_dev = ?, mobile_dev = ?, ai_ml = ?, game_dev = ?,
-                performance = ?, oop_supported = ?, community_support = ?, job_market_demand = ?, syntax_simplicity = ?,
-                backend = ?, frontend = ?, documentation = ?, video_embed = ?, compiler_link = ?, other_resources = ?
-            WHERE username = ? AND language_name = ?
-        ");
-
-        $stmt->bind_param(
-          "sssssssssssssssssssssssss",
-          $languageLogo, $imageName, $languageImage, $definition, $json_description,
-          $json_full_article, $json_list_points, $easyToLearn, $webDev, $mobileDev, $aiMl,
-          $gameDev, $performance, $objectOriented, $communitySupport, $marketDemand,
-          $syntaxSimplicity, $backendDev, $frontendDev, $documentation, $video_embed, $compilerUrl,
-          $otherResourcesEdit, $username, $languageName
-        );
-        $stmt->send_long_data(2, $languageImage);
-
-        try {
-          if ($stmt->execute()) {
-            $_SESSION['status'] = "success";
-            $_SESSION['msg_title'] = "Update Successful!";
-            $_SESSION['message'] = "The language data has been updated successfully.";
-          } else {
-            $_SESSION['status'] = "error";
-            $_SESSION['msg_title'] = "Update Failed!";
-            $_SESSION['message'] = "Failed to update the language: '" . htmlspecialchars($stmt->error) . "'.";
-          }
-          echo 'end';
-          $stmt->close();
-          $conn->close();
+      $stmt = $conn->prepare("DELETE FROM languages WHERE username = ? AND language_name = ?");
+      $stmt->bind_param("ss", $username, $languageName);
+      try {
+        if ($stmt->execute()) {
+          $_SESSION['status'] = "success";
+          $_SESSION['msg_title'] = "Delete Successful!";
+          $_SESSION['message'] = "The language data has been deleted successfully.";
           include '../server-side/clear_edit_session.php';
           afterProcess();
-        } catch (Exception $e) {
-          $stmt->close();
-          $conn->close();
-          error_log("Insert failed: " . $e->getMessage());
-          $_SESSION['error_message'] = "An error occurred while saving the language data. Please try again later.\n" . $e->getMessage();
+        } else {
+          $_SESSION['status'] = "error";
+          $_SESSION['msg_title'] = "Delete Failed!";
+          $_SESSION['message'] = "Failed to delete the language: '" . htmlspecialchars($stmt->error) . "'.";
           header("Location: /php-pages/client-side/display_error.php");
           exit;
         }
+      } catch (Exception $e) {
+        error_log("Delete failed: " . $e->getMessage());
+        $_SESSION['error_message'] = "An error occurred while deleting the language data. Please try again later.\n" . $e->getMessage();
+        header("Location: /php-pages/client-side/display_error.php");
+        exit;
       }
     }
   }
+}
 ?>
 
 <!DOCTYPE html>
@@ -298,6 +339,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../../css/style.css" />
+  <link rel="stylesheet" href="../../css/popup-style.css" />
   <link rel="stylesheet" href="../../css/embellishment-style.css" />
   <link rel="stylesheet" href="../../css/waves-style.css" />
   <link rel="stylesheet" href="../../css/contact-style.css" />
@@ -306,6 +348,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   <link rel="stylesheet" href="../../css/toggle-sidebar.css" />
   <link rel="icon" href="../../img/icon/icon.png" type="image/x-icon" />
   <script type="module" src="../../js/actions/edit-new-js.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <title>Edit/Add Languages</title>
 </head>
 <body>
@@ -340,15 +384,75 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <nav>
       <div class="nav-center">
         <a href="../../index.php">Home</a>
-        <a href="Languages.php#languages-section">Learn Languages</a>
-        <a href="Documentation.php#doc-section">Documentation</a>
-        <a href="Compare.php#compare-section">Compare</a>
-        <a href="AboutUs.php#about-us-section">About Us</a>
-        <a href="ContactUs.php#contact-us-section">Contact Us</a>
+        <a href="languages.php#languages-section">Learn Languages</a>
+        <a href="documentation.php#doc-section">Documentation</a>
+        <a href="compare.php#compare-section">Compare</a>
+        <a href="about_us.php#about-us-section">About Us</a>
+        <a href="contact_us.php#contact-us-section">Contact Us</a>
       </div>
       <div class="nav-auth">
-        <a href="Authentication.php#authentication-section" class="not-active-user">Authentication</a>
-        <a href="Logout.php" class="logout-not-active">Logout</a>
+        <?php
+        if(isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] === true) {
+          echo '<a href="../admin-side/admin-dashboard.php#admin-dashboard-main" class="admin-dashboard">Dashboard </a>';
+        }
+        ?>
+        <a href="authentication.php#authentication-section" class="not-active-user">Authentication</a>
+        <a href="logout.php" class="logout-not-active">Logout</a>
+        <?php
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+          include '../server-side/notifications.php';
+          if (isset($_SESSION['has-notifications']) && $_SESSION['has-notifications'] === true) {
+            $username = $_SESSION['username'] ?? '';
+            $dataUsername = htmlspecialchars($username);
+            echo '<div class="notification-container">
+                    <a href="#" id="notification-btn" data-username="' . $dataUsername . '" class="notification-link notification-btn" title="Notifications">
+                      <i class="fas fa-bell"></i>';
+
+            if (isset($_SESSION['new_message_count']) && $_SESSION['new_message_count'] > 0) {
+              echo '<span class="badge">' . $_SESSION['new_message_count'] . '</span>';
+            }
+
+            echo '  </a>
+                    <div id="notification-popup" class="notification-popup hidden" dir="ltr">
+                      <section class="message-section section-style">
+                        <h2 class="popup-title">📨 New Replies</h2>
+                        <hr>
+                        <div class="message-list">';
+
+            if (!empty($_SESSION['user-replies']) && is_array($_SESSION['user-replies'])) {
+              foreach ($_SESSION['user-replies'] as $reply) {
+                $from = htmlspecialchars($reply['from_username']);
+                $subject = htmlspecialchars($reply['subject']);
+                $date = htmlspecialchars($reply['reply_date']);
+                $content = nl2br(htmlspecialchars($reply['reply_content']));
+
+                echo <<<HTML
+                        <div class="message-item">
+                          <div class="message-header">
+                            <p><strong>From:</strong> $from</p>
+                            <p><strong>Subject:</strong> $subject</p>
+                          </div>
+                          <div class="message-body">
+                            <p>$content</p>
+                          </div>
+                          <div class="message-footer">
+                            <small><strong>Date:</strong> $date</small>
+                          </div>
+                        </div>
+                        <hr>
+                  HTML;
+              }
+            } else {
+              echo '<div class="message-item"><p>No new replies.</p></div>';
+            }
+
+            echo '</div>
+                  </section>
+                </div>
+              </div>';
+          }
+        }
+        ?>
       </div>
     </nav>
   </header>
@@ -650,7 +754,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                       $languageKey = $_SESSION['active-language-id'] ?? '';
                       if ($languageKey && isset($_SESSION['languages'][$languageKey])) {
                         $docLink = htmlspecialchars($_SESSION['languages'][$languageKey]['documentation']);
-                        $docLink = '';
                       } else {
                         $docLink = '';
                       }
@@ -730,6 +833,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <input type="button" name="removeRow" id="removeRow-Edit" class="row-control" value="➖ Remove Last Resource" />
                 <input type="button" name="addNewRow" id="addNewRow-Edit" class="row-control" value="➕ Add Resource" />
                 <button type="submit" name="editBtn" id="editSubmitLanguageBtn">Submit Language</button>
+                <button type="submit" name="deleteBtn" id="editDeleteLanguageBtn" class="row-control">Delete Language</button>
               </td>
             </tr>
           </table>
@@ -743,7 +847,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   </footer>
   <div class="waves"></div>
   <script src="../../js/actions/edit-new-js.js"></script>
+  <script src="../../js/actions/sweet-alert2-js.js"></script>
   <script src="../../js/actions/toggle-sidebar-js.js"></script>
+  <script src="../../js/actions/popup-js.js"></script>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const active = "<?php echo $_GET['active'] ?? ''; ?>";
