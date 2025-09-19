@@ -36,3 +36,12 @@ git merge origin/main
 
 # Force push (overwrites remote history - not recommended)
 git push origin main --force
+
+# Remove the file from Git tracking but keep it locally
+git rm --cached "File Path"
+
+# Commit the removal
+git commit -m "Message"
+
+# Push changes to GitHub
+git push origin main
