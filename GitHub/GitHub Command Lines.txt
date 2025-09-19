@@ -1,10 +1,38 @@
-GitHub Command Lines:
-
+# Initialize a new local Git repository
 git init
+
+# Add all files to staging area
 git add .
-git remote add origin httpsgithub.comMuathHassounProgrammingLanguages-Website.
-git pull origin main
-git commit -m Message
-git branch -m master main  OR git push origin master
-git push origin main
+
+# Commit staged changes with a message
+git commit -m "Your commit message"
+
+# Add a remote repository (GitHub URL)
+git remote add origin <Repo URL>
+
+# Check remote repository URLs
 git remote -v
+
+# Rename current branch to main (recommended)
+git branch -M main
+
+# Pull latest changes from remote main branch
+git pull origin main
+
+# Push local commits to remote main branch (first time with -u)
+git push -u origin main
+
+# Push local commits to remote main branch (normal usage)
+git push origin main
+
+# Show current branch and status of files
+git status
+
+# Fetch updates from remote without merging
+git fetch origin
+
+# Merge remote main branch into local branch
+git merge origin/main
+
+# Force push (overwrites remote history - not recommended)
+git push origin main --force
