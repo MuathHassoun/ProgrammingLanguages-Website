@@ -5,6 +5,6 @@ node_modules
 dist
 .cache
 
-# Ignore config file
+# Ignore config & GitHub Token files
 config.php
 GitHub/GitHub Token.txt
